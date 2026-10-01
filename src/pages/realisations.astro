@@ -1,0 +1,212 @@
+---
+import { getCollection } from 'astro:content';
+
+import ProjectCard from '../components/ProjectCard.astro';
+import ReservationButton from '../components/ReservationButton.astro';
+import { SECTEURS } from '../content.config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projets = (await getCollection('projets'))
+  .sort((a, b) => a.data.ordre - b.data.ordre);
+
+const filtres = [
+  { label: 'Tous', count: projets.length },
+  ...SECTEURS.map((secteur) => ({
+    label: secteur,
+    count: projets.filter((p) => p.data.secteur === secteur).length,
+  })),
+];
+---
+
+<BaseLayout
+  title="Réalisations · Kevin Rakotosoa"
+  description="Neuf outils conçus ou repris pour des entreprises, des associations et des services publics : commerce, formation, service public."
+  page="realisations"
+>
+  <div class="container intro">
+    <a href="/" class="back">← Retour à l'accueil</a>
+    <h1 class="title">Toutes mes réalisations</h1>
+    <p class="lead">
+      Neuf outils conçus ou repris pour des entreprises, des associations et
+      des services publics. Tous sont en service aujourd'hui.
+    </p>
+    <div class="filters" role="group" aria-label="Filtrer par secteur">
+      {
+        filtres.map((f, i) => (
+          <button
+            type="button"
+            class="btn filter"
+            data-filter={f.label}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.label} <span class="filter-count">{f.count}</span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="sr-only" aria-live="polite" data-filter-status></p>
+  </div>
+
+  <div class="container grid" data-projets>
+    {projets.map((p) => <ProjectCard projet={p} variante="realisations" />)}
+  </div>
+
+  <section class="section-dark cta" aria-labelledby="cta-title">
+    <div class="container cta-inner">
+      <div>
+        <h2 class="cta-title" id="cta-title">
+          Votre projet pourrait être le dixième
+        </h2>
+        <p class="cta-text">Un appel gratuit de 30 minutes pour en parler.</p>
+      </div>
+      <ReservationButton />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    '[data-filter]',
+  );
+  const cards = document.querySelectorAll<HTMLElement>(
+    '[data-projets] [data-secteur]',
+  );
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      let shown = 0;
+      cards.forEach((card) => {
+        const visible = filter === 'Tous' || card.dataset.secteur === filter;
+        card.hidden = !visible;
+        shown += visible ? 1 : 0;
+      });
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b === button));
+      });
+      if (status) {
+        status.textContent = `${shown} projet${shown > 1 ? 's' : ''} affiché${
+          shown > 1 ? 's' : ''
+        }`;
+      }
+    });
+  });
+</script>
+
+<style>
+  .intro {
+    padding-top: 72px;
+  }
+
+  .back {
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .title {
+    font-size: clamp(44px, 4.6vw, 64px);
+    line-height: 1.04;
+    margin: 22px 0 16px;
+  }
+
+  .lead {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+    max-width: 58ch;
+    margin: 0 0 36px;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .filter {
+    white-space: nowrap;
+    font-size: 15px;
+    padding: 9px 16px;
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-divider);
+  }
+
+  .filter:hover {
+    background: color-mix(in srgb, var(--color-text) 7%, transparent);
+  }
+
+  .filter[aria-pressed='true'] {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border-color: var(--color-accent);
+  }
+
+  .filter-count {
+    opacity: .6;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    padding-block: 36px 88px;
+  }
+
+  .grid > :global([hidden]) {
+    display: none;
+  }
+
+  .cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 72px;
+  }
+
+  .cta-title {
+    font-size: 44px;
+    line-height: 1.05;
+    margin: 0 0 10px;
+  }
+
+  .cta-text {
+    font-size: 18px;
+    margin: 0;
+    opacity: .85;
+  }
+
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .intro {
+      padding-top: 40px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      padding-block: 28px 64px;
+    }
+
+    .cta-inner {
+      padding-block: 56px;
+    }
+
+    .cta-title {
+      font-size: 34px;
+    }
+  }
+</style>
