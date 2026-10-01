@@ -1,43 +1,32 @@
-# Astro Starter Kit: Minimal
+# Portfolio de Kevin Rakotosoa
 
-```sh
-npm create astro@latest -- --template minimal
+Site statique construit avec [Astro](https://astro.build), à partir du brief
+`../portfolio-design-brief` (design system « Industry »).
+
+## Commandes
+
+| Commande          | Action                                   |
+| ----------------- | ---------------------------------------- |
+| `npm install`     | Installe les dépendances                 |
+| `npm run dev`     | Serveur de dev sur `localhost:4321`      |
+| `npm run build`   | Génère le site statique dans `./dist/`   |
+| `npm run preview` | Prévisualise le build                    |
+
+## Structure
+
+- `src/styles/industry.css` : design system (tokens, `.blueprint`, `.duotone`, etc.)
+- `src/styles/theme.css` : mode sombre et surcharges du portfolio
+- `src/layouts/BaseLayout.astro` : layout commun, script anti-flash du thème
+- `src/content/projets/<slug>/index.md` : une fiche par projet
+- `src/content.config.ts` : schéma de la collection `projets`
+
+## Ajouter une capture de projet
+
+Déposer l'image dans le dossier du projet, puis décommenter dans sa fiche :
+
+```yaml
+image: ./capture.png
+imageAlt: "Description de la capture"
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Le build échoue si le fichier est introuvable ou si `imageAlt` manque.
