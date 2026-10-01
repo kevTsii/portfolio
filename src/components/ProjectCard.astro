@@ -14,8 +14,8 @@ const { data } = projet;
 const accueil = variante === 'accueil';
 const etiquette = accueil ? (data.etiquetteAccueil ?? data.secteur) : data.secteur;
 const texte = accueil
-  ? (data.resumeAccueil ?? projet.body?.trim())
-  : projet.body?.trim();
+  ? (data.resumeAccueil ?? data.resume ?? projet.body?.trim())
+  : (data.resume ?? projet.body?.trim());
 const Tag = accueil ? 'a' : 'article';
 ---
 
@@ -61,6 +61,19 @@ const Tag = accueil ? 'a' : 'article';
         <div class="project-tech">
           <span class="project-name">{data.nom}</span> · {data.technologies}
         </div>
+      )
+    }
+    {
+      !accueil && (
+        <button
+          type="button"
+          class="project-open"
+          data-open-projet={projet.id}
+          aria-haspopup="dialog"
+        >
+          Voir le détail<span class="sr-only"> : {data.nom}</span>{' '}
+          <span aria-hidden="true">→</span>
+        </button>
       )
     }
   </div>
@@ -169,5 +182,37 @@ const Tag = accueil ? 'a' : 'article';
 
   .project-name {
     color: var(--color-neutral-700);
+  }
+
+  .project-open {
+    align-self: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 15px;
+    color: var(--color-accent-700);
+    cursor: pointer;
+  }
+
+  /* Toute la carte ouvre la modale. */
+  .project-open::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .project-card:hover .project-open {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .project-card:has(.project-open:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .project-open:focus-visible {
+    outline: none;
   }
 </style>

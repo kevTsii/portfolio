@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import ProjectCard from '../components/ProjectCard.astro';
+import ProjectModal from '../components/ProjectModal.astro';
 import ReservationButton from '../components/ReservationButton.astro';
 import { SECTEURS } from '../content.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -50,6 +51,7 @@ const filtres = [
   <div class="container grid" data-projets>
     {projets.map((p) => <ProjectCard projet={p} variante="realisations" />)}
   </div>
+  {projets.map((p) => <ProjectModal projet={p} />)}
 
   <section class="section-dark cta" aria-labelledby="cta-title">
     <div class="container cta-inner">

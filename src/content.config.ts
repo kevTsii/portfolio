@@ -19,8 +19,18 @@ const projets = defineCollection({
     // Variantes affichées sur l'accueil ; à défaut, secteur et texte du projet.
     etiquetteAccueil: z.string().optional(),
     resumeAccueil: z.string().optional(),
+    // Phrase courte de la carte ; à défaut, le texte du projet.
+    resume: z.string().optional(),
+    // Détail affiché dans la modale, en plus du texte du projet.
+    role: z.string().optional(),
+    lien: z.url().optional(),
     image: image().optional(),
     imageAlt: z.string().optional(),
+    // Captures supplémentaires, affichées sous l'image principale.
+    galerie: z.array(z.object({
+      image: image(),
+      alt: z.string(),
+    })).default([]),
   }).refine(
     (p) => !p.image || !!p.imageAlt,
     { message: 'imageAlt est obligatoire quand une image est fournie' },
