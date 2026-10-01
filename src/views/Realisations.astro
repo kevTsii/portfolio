@@ -88,34 +88,40 @@ const filtres = [
 </BaseLayout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>(
-    '[data-filter]',
-  );
-  const cards = document.querySelectorAll<HTMLElement>(
-    '[data-projets] [data-secteur]',
-  );
-  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  function initFiltres(): void {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      '[data-filter]',
+    );
+    const cards = document.querySelectorAll<HTMLElement>(
+      '[data-projets] [data-secteur]',
+    );
+    const status = document.querySelector<HTMLElement>(
+      '[data-filter-status]',
+    );
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const filter = button.dataset.filter;
-      let shown = 0;
-      cards.forEach((card) => {
-        const visible = filter === 'Tous' || card.dataset.secteur === filter;
-        card.hidden = !visible;
-        shown += visible ? 1 : 0;
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        let shown = 0;
+        cards.forEach((card) => {
+          const visible = filter === 'Tous' || card.dataset.secteur === filter;
+          card.hidden = !visible;
+          shown += visible ? 1 : 0;
+        });
+        buttons.forEach((b) => {
+          b.setAttribute('aria-pressed', String(b === button));
+        });
+        if (status) {
+          const modele = (shown > 1
+            ? status.dataset.pluriel
+            : status.dataset.singulier) ?? '';
+          status.textContent = modele.replace('{n}', String(shown));
+        }
       });
-      buttons.forEach((b) => {
-        b.setAttribute('aria-pressed', String(b === button));
-      });
-      if (status) {
-        const modele = (shown > 1
-          ? status.dataset.pluriel
-          : status.dataset.singulier) ?? '';
-        status.textContent = modele.replace('{n}', String(shown));
-      }
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initFiltres);
 </script>
 
 <style>

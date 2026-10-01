@@ -244,13 +244,18 @@ const portrait = Object.values(portraits)[0]?.default;
 </BaseLayout>
 
 <script>
-  const word = document.querySelector<HTMLElement>('.hero-word');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let minuterie: number | undefined;
 
-  if (word && !reduced) {
+  function initMots(): void {
+    window.clearInterval(minuterie);
+    const word = document.querySelector<HTMLElement>('.hero-word');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!word || reduced) {
+      return;
+    }
     const words: string[] = JSON.parse(word.dataset.words ?? '[]');
     let index = 0;
-    setInterval(() => {
+    minuterie = window.setInterval(() => {
       index = (index + 1) % words.length;
       word.textContent = words[index];
       // Relance l'animation d'entrée à chaque changement de mot.
@@ -259,6 +264,12 @@ const portrait = Object.values(portraits)[0]?.default;
       word.style.animation = '';
     }, 3200);
   }
+
+  document.addEventListener('astro:page-load', initMots);
+  // Arrête le défilement des mots en quittant la page.
+  document.addEventListener('astro:before-swap', () => {
+    window.clearInterval(minuterie);
+  });
 </script>
 
 <style>

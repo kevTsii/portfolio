@@ -115,13 +115,16 @@ const titreId = `detail-${projet.id}-titre`;
 </dialog>
 
 <script>
-  const dialogs = document.querySelectorAll<HTMLDialogElement>(
-    'dialog[data-projet]',
-  );
   let declencheur: HTMLElement | null = null;
 
   function urlSansHash(): string {
     return location.pathname + location.search;
+  }
+
+  // history.state est conservé : le routeur d'Astro s'en sert pour
+  // la navigation arrière.
+  function remplacerUrl(url: string): void {
+    history.replaceState(history.state, '', url);
   }
 
   function ouvrir(id: string, source: HTMLElement | null = null): void {
@@ -131,61 +134,8 @@ const titreId = `detail-${projet.id}-titre`;
     }
     declencheur = source;
     dialog.showModal();
-    history.replaceState(null, '', `${urlSansHash()}#${id}`);
+    remplacerUrl(`${urlSansHash()}#${id}`);
   }
-
-  document.querySelectorAll<HTMLElement>('[data-open-projet]')
-    .forEach((button) => {
-      button.addEventListener('click', () => {
-        ouvrir(button.dataset.openProjet ?? '', button);
-      });
-    });
-
-  dialogs.forEach((dialog) => {
-    dialog.querySelector('[data-close]')?.addEventListener('click', () => {
-      dialog.close();
-    });
-
-    // Un clic sur le fond (hors du contenu) ferme la modale.
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) {
-        dialog.close();
-      }
-    });
-
-    dialog.addEventListener('close', () => {
-      history.replaceState(null, '', urlSansHash());
-      declencheur?.focus();
-      declencheur = null;
-    });
-
-    const copy = dialog.querySelector<HTMLButtonElement>('[data-copy]');
-    if (!copy) {
-      return;
-    }
-    const label = copy.querySelector<HTMLElement>('[data-copy-label]');
-    const libelle = label?.textContent ?? '';
-    copy.addEventListener('click', async () => {
-      const url = `${location.origin}${urlSansHash()}#${dialog.dataset.projet}`;
-      try {
-        await navigator.clipboard.writeText(url);
-        copy.classList.add('is-copied');
-        if (label) {
-          label.textContent = dialog.dataset.copie ?? libelle;
-        }
-      } catch {
-        if (label) {
-          label.textContent = dialog.dataset.copieImpossible ?? libelle;
-        }
-      }
-      setTimeout(() => {
-        copy.classList.remove('is-copied');
-        if (label) {
-          label.textContent = libelle;
-        }
-      }, 2000);
-    });
-  });
 
   // Lien direct (depuis l'accueil ou un lien copié) : /realisations#projet.
   function ouvrirDepuisHash(): void {
@@ -195,7 +145,65 @@ const titreId = `detail-${projet.id}-titre`;
     }
   }
 
-  ouvrirDepuisHash();
+  function initModales(): void {
+    document.querySelectorAll<HTMLElement>('[data-open-projet]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          ouvrir(button.dataset.openProjet ?? '', button);
+        });
+      });
+
+    document.querySelectorAll<HTMLDialogElement>('dialog[data-projet]')
+      .forEach((dialog) => {
+        dialog.querySelector('[data-close]')?.addEventListener('click', () => {
+          dialog.close();
+        });
+
+        // Un clic sur le fond (hors du contenu) ferme la modale.
+        dialog.addEventListener('click', (event) => {
+          if (event.target === dialog) {
+            dialog.close();
+          }
+        });
+
+        dialog.addEventListener('close', () => {
+          remplacerUrl(urlSansHash());
+          declencheur?.focus();
+          declencheur = null;
+        });
+
+        const copy = dialog.querySelector<HTMLButtonElement>('[data-copy]');
+        if (!copy) {
+          return;
+        }
+        const label = copy.querySelector<HTMLElement>('[data-copy-label]');
+        const libelle = label?.textContent ?? '';
+        copy.addEventListener('click', async () => {
+          const url = `${location.origin}${urlSansHash()}#${dialog.dataset.projet}`;
+          try {
+            await navigator.clipboard.writeText(url);
+            copy.classList.add('is-copied');
+            if (label) {
+              label.textContent = dialog.dataset.copie ?? libelle;
+            }
+          } catch {
+            if (label) {
+              label.textContent = dialog.dataset.copieImpossible ?? libelle;
+            }
+          }
+          setTimeout(() => {
+            copy.classList.remove('is-copied');
+            if (label) {
+              label.textContent = libelle;
+            }
+          }, 2000);
+        });
+      });
+
+    ouvrirDepuisHash();
+  }
+
+  document.addEventListener('astro:page-load', initModales);
   window.addEventListener('hashchange', ouvrirDepuisHash);
 </script>
 

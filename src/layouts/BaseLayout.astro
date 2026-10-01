@@ -5,6 +5,8 @@ import '@fontsource/barlow-condensed/600.css';
 import '../styles/industry.css';
 import '../styles/theme.css';
 
+import { ClientRouter } from 'astro:transitions';
+
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import { chemin, t, type Lang, type Page } from '../i18n';
@@ -45,8 +47,20 @@ const { title, description, page, lang } = Astro.props;
             : 'light';
         }
         document.documentElement.dataset.theme = theme;
+
+        // Navigation sans rechargement : la page entrante reçoit le thème
+        // avant d'être affichée. Écouteur posé une seule fois.
+        if (window.ktrThemeSwap) {
+          return;
+        }
+        window.ktrThemeSwap = true;
+        document.addEventListener('astro:before-swap', (event) => {
+          event.newDocument.documentElement.dataset.theme =
+            document.documentElement.dataset.theme;
+        });
       })();
     </script>
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#contenu">{t(lang).layout.skipLink}</a>

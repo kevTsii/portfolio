@@ -89,62 +89,80 @@ const contact = chemin(lang, 'accueil', 'contact');
 
 <script>
   const root = document.documentElement;
-  const nav = document.querySelector<HTMLElement>('[data-nav]');
-  const textes = nav?.dataset ?? {};
-  const themeButton = document.querySelector<HTMLButtonElement>(
-    '[data-theme-toggle]',
-  );
+  // Position à restaurer quand la page change de langue.
+  let defilementLangue: number | null = null;
 
-  function syncThemeLabel() {
-    const label = (root.dataset.theme === 'dark'
-      ? textes.themeClair
-      : textes.themeSombre) ?? '';
-    themeButton?.setAttribute('aria-label', label);
-    themeButton?.setAttribute('title', label);
-  }
-
-  syncThemeLabel();
-  themeButton?.addEventListener('click', () => {
-    const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = theme;
-    try {
-      localStorage.setItem('ktr-theme', theme);
-    } catch {
-      // Stockage indisponible : le choix vaut pour la page en cours.
+  function initNav(): void {
+    const nav = document.querySelector<HTMLElement>('[data-nav]');
+    if (!nav) {
+      return;
     }
-    syncThemeLabel();
-  });
+    const textes = nav.dataset;
+    const themeButton = nav.querySelector<HTMLButtonElement>(
+      '[data-theme-toggle]',
+    );
+    const burger = nav.querySelector<HTMLButtonElement>('[data-nav-burger]');
 
-  // Garde l'ancre (section ou projet ouvert) en changeant de langue.
-  document.querySelector<HTMLAnchorElement>('[data-lang-switch]')
-    ?.addEventListener('click', (event) => {
-      const lien = event.currentTarget as HTMLAnchorElement;
-      lien.hash = location.hash;
+    function syncThemeLabel(): void {
+      const label = (root.dataset.theme === 'dark'
+        ? textes.themeClair
+        : textes.themeSombre) ?? '';
+      themeButton?.setAttribute('aria-label', label);
+      themeButton?.setAttribute('title', label);
+    }
+
+    function setMenuOpen(open: boolean): void {
+      nav?.toggleAttribute('data-open', open);
+      burger?.setAttribute('aria-expanded', String(open));
+      burger?.setAttribute(
+        'aria-label',
+        (open ? textes.menuFermer : textes.menuOuvrir) ?? '',
+      );
+    }
+
+    syncThemeLabel();
+    themeButton?.addEventListener('click', () => {
+      const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = theme;
+      try {
+        localStorage.setItem('ktr-theme', theme);
+      } catch {
+        // Stockage indisponible : le choix vaut pour la session en cours.
+      }
+      syncThemeLabel();
     });
 
-  const burger = document.querySelector<HTMLButtonElement>(
-    '[data-nav-burger]',
-  );
-
-  function setMenuOpen(open: boolean) {
-    nav?.toggleAttribute('data-open', open);
-    burger?.setAttribute('aria-expanded', String(open));
-    burger?.setAttribute(
-      'aria-label',
-      (open ? textes.menuFermer : textes.menuOuvrir) ?? '',
-    );
+    burger?.addEventListener('click', () => {
+      setMenuOpen(!nav.hasAttribute('data-open'));
+    });
+    nav.querySelectorAll('#nav-menu a').forEach((link) => {
+      link.addEventListener('click', () => setMenuOpen(false));
+    });
   }
 
-  burger?.addEventListener('click', () => {
-    setMenuOpen(!nav?.hasAttribute('data-open'));
-  });
-  nav?.querySelectorAll('#nav-menu a').forEach((link) => {
-    link.addEventListener('click', () => setMenuOpen(false));
-  });
+  // La navigation est remplacée à chaque page : on la réinitialise.
+  document.addEventListener('astro:page-load', initNav);
+
+  // Écouteurs du document, posés une seule fois.
   document.addEventListener('keydown', (event) => {
+    const nav = document.querySelector<HTMLElement>('[data-nav]');
+    const burger = nav?.querySelector<HTMLButtonElement>('[data-nav-burger]');
     if (event.key === 'Escape' && nav?.hasAttribute('data-open')) {
-      setMenuOpen(false);
+      burger?.click();
       burger?.focus();
+    }
+  });
+
+  // Changer de langue garde la position de défilement au lieu de remonter.
+  document.addEventListener('astro:before-preparation', (event) => {
+    defilementLangue = event.sourceElement?.matches('[data-lang-switch]')
+      ? scrollY
+      : null;
+  });
+  document.addEventListener('astro:after-swap', () => {
+    if (defilementLangue !== null) {
+      scrollTo({ top: defilementLangue, behavior: 'instant' });
+      defilementLangue = null;
     }
   });
 </script>
