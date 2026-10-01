@@ -1,4 +1,5 @@
 import type { Dictionnaire } from './fr';
+import { cardinalEn, majuscule, ordinalEn } from './nombres';
 
 export const en: Dictionnaire = {
   layout: {
@@ -180,17 +181,19 @@ export const en: Dictionnaire = {
   },
   realisations: {
     title: 'Projects · Kevin Rakotosoa',
-    description: 'Nine tools built or taken over for businesses, non-profits '
-      + 'and public services: retail, training, public sector.',
+    description: (n: number) => `${majuscule(cardinalEn(n))} tools built or `
+      + 'taken over for businesses, non-profits and public services: retail, '
+      + 'training, public sector.',
     retour: '← Back to home',
     titre: 'All my projects',
-    intro: 'Nine tools built or taken over for businesses, non-profits and '
-      + 'public services. All of them are in use today.',
+    intro: (n: number) => `${majuscule(cardinalEn(n))} tools built or taken `
+      + 'over for businesses, non-profits and public services. All of them '
+      + 'are in use today.',
     filtres: 'Filter by sector',
     tous: 'All',
     affiche: '{n} project shown',
     affiches: '{n} projects shown',
-    ctaTitre: 'Your project could be the tenth',
+    ctaTitre: (n: number) => `Your project could be the ${ordinalEn(n + 1)}`,
     ctaTexte: 'A free 30-minute call to talk it through.',
   },
 };

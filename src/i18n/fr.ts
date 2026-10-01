@@ -1,5 +1,7 @@
 // Textes de l'interface en français. en.ts doit reprendre la même forme.
 
+import { cardinalFr, majuscule, ordinalFr } from './nombres';
+
 export const fr = {
   layout: {
     skipLink: 'Aller au contenu',
@@ -188,20 +190,21 @@ export const fr = {
   },
   realisations: {
     title: 'Réalisations · Kevin Rakotosoa',
-    description: 'Neuf outils conçus ou repris pour des entreprises, des '
-      + 'associations et des services publics : commerce, formation, service '
-      + 'public.',
+    // n : nombre de projets du site.
+    description: (n: number) => `${majuscule(cardinalFr(n))} outils conçus `
+      + 'ou repris pour des entreprises, des associations et des services '
+      + 'publics : commerce, formation, service public.',
     retour: '← Retour à l\'accueil',
     titre: 'Toutes mes réalisations',
-    intro: 'Neuf outils conçus ou repris pour des entreprises, des '
-      + 'associations et des services publics. Tous sont en service '
-      + 'aujourd\'hui.',
+    intro: (n: number) => `${majuscule(cardinalFr(n))} outils conçus ou `
+      + 'repris pour des entreprises, des associations et des services '
+      + 'publics. Tous sont en service aujourd\'hui.',
     filtres: 'Filtrer par secteur',
     tous: 'Tous',
     // {n} est remplacé par le nombre de projets affichés.
     affiche: '{n} projet affiché',
     affiches: '{n} projets affichés',
-    ctaTitre: 'Votre projet pourrait être le dixième',
+    ctaTitre: (n: number) => `Votre projet pourrait être le ${ordinalFr(n + 1)}`,
     ctaTexte: 'Un appel gratuit de 30 minutes pour en parler.',
   },
 };

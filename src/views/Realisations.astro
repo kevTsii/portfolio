@@ -27,7 +27,7 @@ const filtres = [
 
 <BaseLayout
   title={tr.realisations.title}
-  description={tr.realisations.description}
+  description={tr.realisations.description(projets.length)}
   page="realisations"
   lang={lang}
 >
@@ -36,7 +36,7 @@ const filtres = [
       {tr.realisations.retour}
     </a>
     <h1 class="title">{tr.realisations.titre}</h1>
-    <p class="lead">{tr.realisations.intro}</p>
+    <p class="lead">{tr.realisations.intro(projets.length)}</p>
     <div
       class="filters"
       role="group"
@@ -78,7 +78,7 @@ const filtres = [
     <div class="container cta-inner">
       <div>
         <h2 class="cta-title" id="cta-title">
-          {tr.realisations.ctaTitre}
+          {tr.realisations.ctaTitre(projets.length)}
         </h2>
         <p class="cta-text">{tr.realisations.ctaTexte}</p>
       </div>
