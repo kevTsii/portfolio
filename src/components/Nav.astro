@@ -255,10 +255,12 @@ const contact = chemin(lang, 'accueil', 'contact');
     background: color-mix(in srgb, var(--color-text) 7%, transparent);
   }
 
+  /* `.nav a { color: inherit }` du design system l'emporterait sinon. */
   .nav-cta,
   .nav-menu-cta {
     white-space: nowrap;
     text-decoration: none;
+    color: var(--color-bg);
   }
 
   .nav-cta:hover,
