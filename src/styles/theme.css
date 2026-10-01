@@ -1,0 +1,178 @@
+/* Surcharges du portfolio au-dessus du design system Industry (industry.css). */
+
+:root {
+  --contact-bg: var(--color-accent-900);
+  --contact-fg: var(--color-bg);
+  --contact-line: rgba(242, 242, 243, .25);
+  --method-num: var(--color-accent-300);
+  --status-available: #34d27b;
+  --nav-offset: 70px;
+  /* Mode clair : contrastes AA (texte secondaire 4,8:1, boutons 5,8:1). */
+  --color-neutral-600: #6a6a6d;
+  --color-divider: color-mix(in srgb, #1d1f20 22%, transparent);
+  /* Fond des éléments pleins (bouton principal, filtre actif). */
+  --fond-action: var(--color-accent-700);
+  --fond-action-survol: var(--color-accent-800);
+}
+
+/* Mode sombre : data-theme est posé sur <html> avant le premier rendu. */
+:root[data-theme="dark"] {
+  --color-bg: #111315;
+  --color-surface: #111315;
+  --color-text: #e6e8ea;
+  --color-divider: rgba(230, 232, 234, .14);
+  --color-neutral-100: #1c1f22;
+  --color-neutral-600: #8a8f94;
+  --color-neutral-700: #a9aeb2;
+  --color-neutral-800: #d0d3d6;
+  --color-accent: #7fa3c6;
+  --color-accent-100: #1a2632;
+  --color-accent-300: #3a5670;
+  --color-accent-600: #93b3d2;
+  --color-accent-700: #9dbbd8;
+  --color-accent-800: #c3d6e8;
+  --color-accent-900: #1c2d3d;
+  --contact-bg: #1c2d3d;
+  --contact-fg: #e6e8ea;
+  --method-num: #9dbbd8;
+  --fond-action: var(--color-accent);
+  --fond-action-survol: var(--color-accent-600);
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-offset);
+}
+
+body {
+  transition: background .3s, color .3s;
+}
+
+a {
+  color: var(--color-accent-700);
+}
+
+a:hover {
+  color: var(--color-accent-900);
+}
+
+.btn-primary {
+  background: var(--fond-action);
+  border-color: var(--fond-action);
+}
+
+.btn-primary:hover {
+  background: var(--fond-action-survol);
+}
+
+/* Les liens stylés en bouton gardent leur couleur au survol. */
+a.btn-primary:hover {
+  color: var(--color-bg);
+}
+
+a.btn-secondary:hover {
+  color: var(--color-text);
+}
+
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 48px;
+}
+
+/* Sections de page */
+.section {
+  border-top: 1px solid var(--color-divider);
+}
+
+.section > .container {
+  padding-block: 76px 80px;
+}
+
+.section-tinted {
+  background: var(--color-accent-100);
+}
+
+.section-dark {
+  background: var(--contact-bg);
+  color: var(--contact-fg);
+  border-top: 0;
+}
+
+.section-title {
+  font-size: 44px;
+  line-height: 1.05;
+  margin: 0 0 12px;
+}
+
+.section-intro {
+  font-size: 18px;
+  color: var(--color-neutral-700);
+  margin: 0 0 40px;
+  max-width: 56ch;
+}
+
+.btn-lg {
+  font-size: 16px;
+  padding: 14px 24px;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 30;
+  padding: 10px 16px;
+  background: var(--fond-action);
+  color: var(--color-bg);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+  color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 16px;
+  }
+
+  .section > .container {
+    padding-block: 56px 60px;
+  }
+
+  .section-title {
+    font-size: 34px;
+  }
+
+  .section-intro {
+    font-size: 17px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

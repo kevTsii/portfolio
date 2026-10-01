@@ -1,0 +1,36 @@
+---
+import { SITE } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<footer class="footer">
+  <span>© {new Date().getFullYear()} {SITE.nomComplet}</span>
+  <span class="footer-role">{t(lang).footer.role}</span>
+</footer>
+
+<style>
+  .footer {
+    padding: 24px 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 14px;
+    color: var(--color-neutral-600);
+  }
+
+  .footer-role {
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px 16px;
+    }
+  }
+</style>

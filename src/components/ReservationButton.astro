@@ -1,0 +1,35 @@
+---
+import { SITE } from '../data/site';
+import { t, type Lang } from '../i18n';
+import Corners from './Corners.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<a href={SITE.reservationUrl} class="blueprint reservation-btn">
+  <Corners />{t(lang).reservation}
+</a>
+
+<style>
+  .reservation-btn {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 15px 26px;
+    background: var(--contact-fg);
+    color: var(--contact-bg);
+    transition: opacity .15s;
+  }
+
+  .reservation-btn:hover {
+    color: var(--contact-bg);
+    opacity: .88;
+  }
+</style>

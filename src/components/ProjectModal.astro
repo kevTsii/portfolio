@@ -1,0 +1,472 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+
+import { t, type Lang } from '../i18n';
+import type { Projet } from '../i18n/projets';
+import Icon from './Icon.astro';
+
+interface Props {
+  projet: Projet;
+  lang: Lang;
+}
+
+const { projet, lang } = Astro.props;
+const { data } = projet;
+const tr = t(lang).projet;
+const { Content } = await render(projet.entry);
+
+const captures = [
+  ...(data.image ? [{ image: data.image, alt: data.imageAlt ?? '' }] : []),
+  ...data.galerie,
+];
+const technologies = data.competences.length > 0
+  ? data.competences
+  : data.technologies.split(',').map((techno) => techno.trim());
+const titreId = `detail-${projet.id}-titre`;
+---
+
+<dialog
+  class:list={['modal', { 'sans-capture': captures.length === 0 }]}
+  id={`detail-${projet.id}`}
+  data-projet={projet.id}
+  aria-labelledby={titreId}
+  data-copie={tr.copie}
+  data-copie-impossible={tr.copieImpossible}
+>
+  <div class="modal-inner">
+    <header class="modal-head">
+      <div>
+        <p class="modal-kicker">{data.nom}</p>
+        <h2 class="modal-title" id={titreId}>{data.titre}</h2>
+      </div>
+      <div class="modal-actions">
+        {
+          data.lien && (
+            <button
+              type="button"
+              class="btn btn-ghost modal-copy"
+              data-copy={data.lien}
+            >
+              <Icon name="link" size={16} class="icon-link" />
+              <Icon name="check" size={16} class="icon-check" />
+              <span data-copy-label>{tr.copier}</span>
+            </button>
+          )
+        }
+        <button
+          type="button"
+          class="btn btn-icon modal-close"
+          data-close
+          aria-label={tr.fermer}
+          autofocus
+        >
+          <Icon name="x" size={20} />
+        </button>
+      </div>
+    </header>
+
+    <div class="modal-body">
+      <div class="modal-text">
+        {
+          data.role && (
+            <p class="modal-role">
+              <span class="modal-label">{tr.role}</span> {data.role}
+            </p>
+          )
+        }
+        <div>
+          <p class="modal-label">{tr.description}</p>
+          <div class="modal-content">
+            <Content />
+          </div>
+        </div>
+        <div>
+          <p class="modal-label">{tr.technologies}</p>
+          <ul class="modal-tags">
+            {technologies.map((t) => <li class="tag tag-neutral">{t}</li>)}
+          </ul>
+        </div>
+        <p class="modal-meta">
+          <span class="tag tag-accent">{t(lang).secteurs[data.secteur]}</span>
+          <span>{data.periode ?? data.annee}</span>
+        </p>
+        {
+          data.lien && (
+            <a
+              href={data.lien}
+              class="btn btn-secondary modal-link"
+              target="_blank"
+              rel="noopener"
+            >
+              {tr.voirSite} <Icon name="arrow-up-right" size={16} />
+            </a>
+          )
+        }
+      </div>
+
+      {
+        captures.length > 0 && (
+          <div class="modal-media">
+            {captures.map((c) => (
+              <Image
+                src={c.image}
+                alt={c.alt}
+                widths={[640, 960, 1280, 1600]}
+                sizes="(max-width: 900px) 100vw, 800px"
+                class="modal-img"
+              />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</dialog>
+
+<script>
+  let declencheur: HTMLElement | null = null;
+
+  function urlSansHash(): string {
+    return location.pathname + location.search;
+  }
+
+  // history.state est conservé : le routeur d'Astro s'en sert pour
+  // la navigation arrière.
+  function remplacerUrl(url: string): void {
+    history.replaceState(history.state, '', url);
+  }
+
+  function ouvrir(id: string, source: HTMLElement | null = null): void {
+    const dialog = document.getElementById(`detail-${id}`);
+    if (!(dialog instanceof HTMLDialogElement) || dialog.open) {
+      return;
+    }
+    declencheur = source;
+    dialog.showModal();
+    remplacerUrl(`${urlSansHash()}#${id}`);
+  }
+
+  // Lien direct (depuis l'accueil ou un lien copié) : /realisations#projet.
+  function ouvrirDepuisHash(): void {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (id) {
+      ouvrir(id);
+    }
+  }
+
+  function initModales(): void {
+    document.querySelectorAll<HTMLElement>('[data-open-projet]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          ouvrir(button.dataset.openProjet ?? '', button);
+        });
+      });
+
+    document.querySelectorAll<HTMLDialogElement>('dialog[data-projet]')
+      .forEach((dialog) => {
+        dialog.querySelector('[data-close]')?.addEventListener('click', () => {
+          dialog.close();
+        });
+
+        // Un clic sur le fond (hors du contenu) ferme la modale.
+        dialog.addEventListener('click', (event) => {
+          if (event.target === dialog) {
+            dialog.close();
+          }
+        });
+
+        dialog.addEventListener('close', () => {
+          remplacerUrl(urlSansHash());
+          declencheur?.focus();
+          declencheur = null;
+        });
+
+        const copy = dialog.querySelector<HTMLButtonElement>('[data-copy]');
+        if (!copy) {
+          return;
+        }
+        const label = copy.querySelector<HTMLElement>('[data-copy-label]');
+        const libelle = label?.textContent ?? '';
+        copy.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(copy.dataset.copy ?? '');
+            copy.classList.add('is-copied');
+            if (label) {
+              label.textContent = dialog.dataset.copie ?? libelle;
+            }
+          } catch {
+            if (label) {
+              label.textContent = dialog.dataset.copieImpossible ?? libelle;
+            }
+          }
+          setTimeout(() => {
+            copy.classList.remove('is-copied');
+            if (label) {
+              label.textContent = libelle;
+            }
+          }, 2000);
+        });
+      });
+
+    ouvrirDepuisHash();
+  }
+
+  document.addEventListener('astro:page-load', initModales);
+  window.addEventListener('hashchange', ouvrirDepuisHash);
+</script>
+
+<style>
+  :global(html:has(dialog.modal[open])) {
+    overflow: hidden;
+  }
+
+  .modal {
+    width: min(1440px, calc(100vw - 48px));
+    height: min(960px, calc(100dvh - 48px));
+    max-width: none;
+    max-height: min(960px, calc(100dvh - 48px));
+    padding: 0;
+    border: 1px solid var(--color-divider);
+    border-radius: 10px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .modal.sans-capture {
+    width: min(800px, calc(100vw - 48px));
+    height: fit-content;
+  }
+
+  .modal[open] {
+    animation: modal-in .2s ease-out;
+  }
+
+  .modal::backdrop {
+    background: color-mix(in srgb, var(--color-neutral-900) 60%, transparent);
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  .modal-inner {
+    height: 100%;
+    max-height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .modal-kicker {
+    margin: 0 0 4px;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--color-accent-700);
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1.1;
+  }
+
+  .modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: none;
+  }
+
+  .modal-copy {
+    font-size: 15px;
+    color: var(--color-accent-700);
+  }
+
+  .modal-copy :global(.icon-check),
+  .modal-copy.is-copied :global(.icon-link) {
+    display: none;
+  }
+
+  .modal-copy.is-copied :global(.icon-check) {
+    display: block;
+  }
+
+  .modal-close {
+    width: 40px;
+    height: 40px;
+  }
+
+  .modal-close:hover {
+    background: color-mix(in srgb, var(--color-text) 7%, transparent);
+  }
+
+  .modal-body {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(340px, 440px) minmax(0, 1fr);
+  }
+
+  .sans-capture .modal-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .modal-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 28px 32px;
+    overflow-y: auto;
+  }
+
+  .modal-label {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: var(--color-neutral-600);
+  }
+
+  .modal-role {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .modal-role .modal-label {
+    margin: 0;
+  }
+
+  .modal-content {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .modal-content :global(p) {
+    margin: 0 0 14px;
+  }
+
+  .modal-content :global(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .modal-content :global(ul) {
+    margin: 0 0 14px;
+    padding-left: 20px;
+  }
+
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .modal-tags .tag {
+    font-size: 14px;
+    padding: 5px 12px;
+  }
+
+  .modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-divider);
+    font-size: 14px;
+    color: var(--color-neutral-600);
+  }
+
+  .modal-meta .tag {
+    font-size: 13px;
+  }
+
+  .modal-link {
+    align-self: flex-start;
+    font-size: 15px;
+    padding: 10px 16px;
+  }
+
+  .modal-media {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    overflow-y: auto;
+    background: var(--color-neutral-100);
+    border-left: 1px solid var(--color-divider);
+  }
+
+  .modal-img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-divider);
+    border-radius: 6px;
+  }
+
+  @media (max-width: 900px) {
+    .modal,
+    .modal.sans-capture {
+      width: 100vw;
+      height: 100dvh;
+      max-height: none;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .modal-inner {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 16px;
+      background: var(--color-bg);
+    }
+
+    /* Libellé masqué visuellement, gardé pour les lecteurs d'écran. */
+    .modal-copy span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    .modal-body {
+      display: block;
+    }
+
+    .modal-text {
+      padding: 20px 16px 28px;
+      overflow: visible;
+    }
+
+    .modal-media {
+      padding: 16px;
+      overflow: visible;
+      border-left: 0;
+      border-top: 1px solid var(--color-divider);
+    }
+  }
+</style>
