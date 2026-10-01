@@ -1,5 +1,5 @@
 export const SITE = {
-  nom: 'Kevin Rakotosoa',
+  nom: 'Kevin Tsiory Rakotosoa',
   nomComplet: 'Kevin Tsiory Rakotosoa',
   email: 'tsioryrakotosoa@gmail.com',
   // À remplacer par le lien Calendly ou Cal.com.

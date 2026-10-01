@@ -1,4 +1,4 @@
-# Portfolio de Kevin Rakotosoa
+# Portfolio de Kevin Tsiory Rakotosoa
 
 Site statique construit avec [Astro](https://astro.build), à partir du brief
 `../portfolio-design-brief` (design system « Industry »).

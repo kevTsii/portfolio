@@ -41,7 +41,7 @@ export const en: Dictionnaire = {
     voirSite: 'Visit the site',
   },
   accueil: {
-    title: 'Kevin Rakotosoa · Freelance PHP developer',
+    title: 'Kevin Tsiory Rakotosoa · Freelance PHP developer',
     description: 'Custom business software that is easy to use and '
       + 'reliable. Quotes, invoices, inventory, customer portals: one single '
       + 'contact, from the first call to go-live.',
@@ -180,7 +180,7 @@ export const en: Dictionnaire = {
     contactLieuTexte: 'Antananarivo, working remotely',
   },
   realisations: {
-    title: 'Projects · Kevin Rakotosoa',
+    title: 'Projects · Kevin Tsiory Rakotosoa',
     description: (n: number) => `${majuscule(cardinalEn(n))} tools built or `
       + 'taken over for businesses, non-profits and public services: retail, '
       + 'training, public sector.',

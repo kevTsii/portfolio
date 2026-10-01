@@ -43,7 +43,7 @@ export const fr = {
     voirSite: 'Voir le site',
   },
   accueil: {
-    title: 'Kevin Rakotosoa · Développeur PHP indépendant',
+    title: 'Kevin Tsiory Rakotosoa · Développeur PHP indépendant',
     description: 'Des logiciels de gestion sur mesure, simples à utiliser et '
       + 'fiables. Devis, factures, stocks, espace client : un seul '
       + 'interlocuteur, du premier appel à la mise en ligne.',
@@ -189,7 +189,7 @@ export const fr = {
     contactLieuTexte: 'Antananarivo, je travaille à distance',
   },
   realisations: {
-    title: 'Réalisations · Kevin Rakotosoa',
+    title: 'Réalisations · Kevin Tsiory Rakotosoa',
     // n : nombre de projets du site.
     description: (n: number) => `${majuscule(cardinalFr(n))} outils conçus `
       + 'ou repris pour des entreprises, des associations et des services '

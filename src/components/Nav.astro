@@ -338,4 +338,15 @@ const contact = chemin(lang, 'accueil', 'contact');
       font-size: 16px;
     }
   }
+
+  /* Le nom complet doit tenir à côté des trois boutons jusqu'à 320 px. */
+  @media (max-width: 380px) {
+    .nav {
+      gap: 8px;
+    }
+
+    .nav-brand {
+      font-size: 18px;
+    }
+  }
 </style>
