@@ -23,6 +23,10 @@ const projets = defineCollection({
     resume: z.string().optional(),
     // Détail affiché dans la modale, en plus du texte du projet.
     role: z.string().optional(),
+    // Période affichée dans la modale (ex. « mars 2025 - aujourd'hui »).
+    periode: z.string().optional(),
+    // Tags de la modale ; à défaut, les technologies de la carte.
+    competences: z.array(z.string()).default([]),
     lien: z.url().optional(),
     image: image().optional(),
     imageAlt: z.string().optional(),
@@ -51,6 +55,8 @@ const projetsEn = defineCollection({
     technologies: z.string().optional(),
     resume: z.string().optional(),
     role: z.string().optional(),
+    periode: z.string().optional(),
+    competences: z.array(z.string()).optional(),
     etiquetteAccueil: z.string().optional(),
     resumeAccueil: z.string().optional(),
     imageAlt: z.string().optional(),

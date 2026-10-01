@@ -20,7 +20,9 @@ const captures = [
   ...(data.image ? [{ image: data.image, alt: data.imageAlt ?? '' }] : []),
   ...data.galerie,
 ];
-const technologies = data.technologies.split(',').map((techno) => techno.trim());
+const technologies = data.competences.length > 0
+  ? data.competences
+  : data.technologies.split(',').map((techno) => techno.trim());
 const titreId = `detail-${projet.id}-titre`;
 ---
 
@@ -79,7 +81,7 @@ const titreId = `detail-${projet.id}-titre`;
         </div>
         <p class="modal-meta">
           <span class="tag tag-accent">{t(lang).secteurs[data.secteur]}</span>
-          <span>{data.annee}</span>
+          <span>{data.periode ?? data.annee}</span>
         </p>
         {
           data.lien && (
