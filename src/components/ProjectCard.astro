@@ -1,27 +1,32 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
+import { chemin, t, type Lang } from '../i18n';
+import type { Projet } from '../i18n/projets';
 import Corners from './Corners.astro';
 
 interface Props {
-  projet: CollectionEntry<'projets'>;
+  projet: Projet;
   variante: 'accueil' | 'realisations';
+  lang: Lang;
 }
 
-const { projet, variante } = Astro.props;
+const { projet, variante, lang } = Astro.props;
 const { data } = projet;
+const tr = t(lang);
+const corps = projet.entry.body?.trim();
 const accueil = variante === 'accueil';
-const etiquette = accueil ? (data.etiquetteAccueil ?? data.secteur) : data.secteur;
+const secteur = tr.secteurs[data.secteur];
+const etiquette = accueil ? (data.etiquetteAccueil ?? secteur) : secteur;
 const texte = accueil
-  ? (data.resumeAccueil ?? data.resume ?? projet.body?.trim())
-  : (data.resume ?? projet.body?.trim());
+  ? (data.resumeAccueil ?? data.resume ?? corps)
+  : (data.resume ?? corps);
 const Tag = accueil ? 'a' : 'article';
 ---
 
 <Tag
   class:list={['card', 'blueprint', 'project-card', { 'is-link': accueil }]}
-  href={accueil ? `/realisations#${projet.id}` : undefined}
+  href={accueil ? chemin(lang, 'realisations', projet.id) : undefined}
   id={accueil ? undefined : projet.id}
   data-secteur={accueil ? undefined : data.secteur}
 >
@@ -71,7 +76,7 @@ const Tag = accueil ? 'a' : 'article';
           data-open-projet={projet.id}
           aria-haspopup="dialog"
         >
-          Voir le détail<span class="sr-only"> : {data.nom}</span>{' '}
+          {tr.projet.voirDetail}<span class="sr-only"> : {data.nom}</span>{' '}
           <span aria-hidden="true">→</span>
         </button>
       )

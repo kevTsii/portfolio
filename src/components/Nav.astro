@@ -1,52 +1,83 @@
 ---
-import { NAV_LINKS, SITE } from '../data/site';
+import { SITE } from '../data/site';
+import { autreLangue, chemin, t, type Lang, type Page } from '../i18n';
 import Corners from './Corners.astro';
 import Icon from './Icon.astro';
 
 interface Props {
-  page: 'accueil' | 'realisations';
+  page: Page;
+  lang: Lang;
 }
 
-const { page } = Astro.props;
+const { page, lang } = Astro.props;
+const tr = t(lang).nav;
+const autre = autreLangue(lang);
+const liens = [
+  { href: chemin(lang, 'accueil', 'services'), label: tr.services },
+  { href: chemin(lang, 'accueil', 'methode'), label: tr.methode },
+  {
+    href: chemin(lang, 'realisations'),
+    label: tr.realisations,
+    page: 'realisations',
+  },
+  { href: chemin(lang, 'accueil', 'faq'), label: tr.faq },
+];
+const contact = chemin(lang, 'accueil', 'contact');
 ---
 
-<header class="nav" data-nav>
-  <a class="nav-brand" href="/#top">{SITE.nom}</a>
-  <nav class="nav-links" id="nav-menu" aria-label="Navigation principale">
+<header
+  class="nav"
+  data-nav
+  data-theme-clair={tr.themeClair}
+  data-theme-sombre={tr.themeSombre}
+  data-menu-ouvrir={tr.menuOuvrir}
+  data-menu-fermer={tr.menuFermer}
+>
+  <a class="nav-brand" href={chemin(lang, 'accueil', 'top')}>{SITE.nom}</a>
+  <nav class="nav-links" id="nav-menu" aria-label={tr.label}>
     {
-      NAV_LINKS.map((link) => (
+      liens.map((link) => (
         <a
           href={link.href}
-          aria-current={
-            'page' in link && link.page === page ? 'page' : undefined
-          }
+          aria-current={link.page === page ? 'page' : undefined}
         >
           {link.label}
         </a>
       ))
     }
-    <a href="/#contact" class="btn btn-primary blueprint nav-menu-cta">
-      <Corners />Discutons de votre projet
+    <a href={contact} class="btn btn-primary blueprint nav-menu-cta">
+      <Corners />{tr.cta}
     </a>
   </nav>
   <button
     type="button"
     class="btn btn-secondary nav-icon-btn"
     data-theme-toggle
-    aria-label="Changer de thème"
+    aria-label={tr.theme}
   >
     <Icon name="sun" class="icon-sun" />
     <Icon name="moon" class="icon-moon" />
   </button>
-  <a href="/#contact" class="btn btn-primary blueprint nav-cta">
-    <Corners />Discutons de votre projet
+  <a
+    href={chemin(autre, page)}
+    class="btn btn-secondary nav-icon-btn nav-lang"
+    hreflang={autre}
+    lang={autre}
+    aria-label={tr.langue}
+    title={tr.langue}
+    data-lang-switch
+  >
+    {autre.toUpperCase()}
+  </a>
+  <a href={contact} class="btn btn-primary blueprint nav-cta">
+    <Corners />{tr.cta}
   </a>
   <button
     type="button"
     class="btn btn-secondary nav-icon-btn nav-burger"
     aria-controls="nav-menu"
     aria-expanded="false"
-    aria-label="Ouvrir le menu"
+    aria-label={tr.menuOuvrir}
     data-nav-burger
   >
     <Icon name="menu" class="icon-menu" />
@@ -56,14 +87,16 @@ const { page } = Astro.props;
 
 <script>
   const root = document.documentElement;
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const textes = nav?.dataset ?? {};
   const themeButton = document.querySelector<HTMLButtonElement>(
     '[data-theme-toggle]',
   );
 
   function syncThemeLabel() {
-    const label = root.dataset.theme === 'dark'
-      ? 'Passer en mode clair'
-      : 'Passer en mode sombre';
+    const label = (root.dataset.theme === 'dark'
+      ? textes.themeClair
+      : textes.themeSombre) ?? '';
     themeButton?.setAttribute('aria-label', label);
     themeButton?.setAttribute('title', label);
   }
@@ -80,7 +113,13 @@ const { page } = Astro.props;
     syncThemeLabel();
   });
 
-  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  // Garde l'ancre (section ou projet ouvert) en changeant de langue.
+  document.querySelector<HTMLAnchorElement>('[data-lang-switch]')
+    ?.addEventListener('click', (event) => {
+      const lien = event.currentTarget as HTMLAnchorElement;
+      lien.hash = location.hash;
+    });
+
   const burger = document.querySelector<HTMLButtonElement>(
     '[data-nav-burger]',
   );
@@ -90,7 +129,7 @@ const { page } = Astro.props;
     burger?.setAttribute('aria-expanded', String(open));
     burger?.setAttribute(
       'aria-label',
-      open ? 'Fermer le menu' : 'Ouvrir le menu',
+      (open ? textes.menuFermer : textes.menuOuvrir) ?? '',
     );
   }
 
@@ -168,6 +207,17 @@ const { page } = Astro.props;
     padding: 0;
     flex: none;
     color: var(--color-text);
+  }
+
+  .nav-lang {
+    font-size: 15px;
+    letter-spacing: .04em;
+    text-decoration: none;
+  }
+
+  .nav-lang:hover {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-text) 7%, transparent);
   }
 
   .nav-cta,

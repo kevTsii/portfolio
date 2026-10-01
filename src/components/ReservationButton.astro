@@ -1,10 +1,17 @@
 ---
 import { SITE } from '../data/site';
+import { t, type Lang } from '../i18n';
 import Corners from './Corners.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 ---
 
 <a href={SITE.reservationUrl} class="blueprint reservation-btn">
-  <Corners />Réserver mon appel gratuit
+  <Corners />{t(lang).reservation}
 </a>
 
 <style>

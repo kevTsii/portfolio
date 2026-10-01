@@ -7,18 +7,20 @@ import '../styles/theme.css';
 
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
+import { chemin, t, type Lang, type Page } from '../i18n';
 
 interface Props {
   title: string;
   description: string;
-  page: 'accueil' | 'realisations';
+  page: Page;
+  lang: Lang;
 }
 
-const { title, description, page } = Astro.props;
+const { title, description, page, lang } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,6 +29,9 @@ const { title, description, page } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
+    <link rel="alternate" hreflang="fr" href={chemin('fr', page)} />
+    <link rel="alternate" hreflang="en" href={chemin('en', page)} />
+    <link rel="alternate" hreflang="x-default" href={chemin('fr', page)} />
     <!-- Applique le thème avant le premier rendu pour éviter le flash. -->
     <script is:inline>
       (() => {
@@ -44,11 +49,11 @@ const { title, description, page } = Astro.props;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#contenu">Aller au contenu</a>
-    <Nav page={page} />
+    <a class="skip-link" href="#contenu">{t(lang).layout.skipLink}</a>
+    <Nav page={page} lang={lang} />
     <main id="contenu">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>

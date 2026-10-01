@@ -1,10 +1,17 @@
 ---
 import { SITE } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 ---
 
 <footer class="footer">
   <span>© {new Date().getFullYear()} {SITE.nomComplet}</span>
-  <span class="footer-role">Développeur indépendant</span>
+  <span class="footer-role">{t(lang).footer.role}</span>
 </footer>
 
 <style>

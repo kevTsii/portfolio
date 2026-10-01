@@ -1,0 +1,814 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+import Corners from '../components/Corners.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ReservationButton from '../components/ReservationButton.astro';
+import { SITE } from '../data/site';
+import { chemin, t, type Lang } from '../i18n';
+import { getProjets } from '../i18n/projets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tr = t(lang).accueil;
+const projets = await getProjets(lang);
+const vedettes = projets.filter((p) => p.data.vedette);
+const nbProjets = projets.length;
+
+// Déposer src/assets/portrait.(jpg|png|webp) pour remplacer les initiales.
+const portraits = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/portrait.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+const portrait = Object.values(portraits)[0]?.default;
+---
+
+<BaseLayout
+  title={tr.title}
+  description={tr.description}
+  page="accueil"
+  lang={lang}
+>
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">
+          <span class="status-dot" aria-hidden="true"></span>
+          {tr.badge}
+        </span>
+        <h1 class="hero-title" id="hero-title">
+          {tr.heroTitre}
+          <span class="hero-word-line">
+            <span
+              class="hero-word"
+              aria-hidden="true"
+              data-words={JSON.stringify(tr.mots)}
+            >{tr.mots[0]}</span>
+            <span class="sr-only">{tr.motsLecteur}</span>
+          </span>
+        </h1>
+        <p class="hero-lead">{tr.heroLead}</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-lg blueprint">
+            <Corners />{tr.ctaAppel}
+          </a>
+          <a href="#projets" class="btn btn-secondary btn-lg">
+            {tr.ctaRealisations}
+          </a>
+        </div>
+        <ul class="hero-stats">
+          <li>
+            <strong>{tr.statExperience[0]}</strong> {tr.statExperience[1]}
+          </li>
+          <li>
+            <strong>{nbProjets} {tr.statOutils[0]}</strong> {tr.statOutils[1]}
+          </li>
+          <li>
+            <strong>{tr.statInterlocuteur[0]}</strong>{' '}
+            {tr.statInterlocuteur[1]}
+          </li>
+        </ul>
+      </div>
+      <div class="hero-portrait">
+        <div class="portrait">
+          <div class="portrait-ring" aria-hidden="true"></div>
+          <div class="duotone portrait-img">
+            {
+              portrait ? (
+                <Image
+                  src={portrait}
+                  alt={SITE.nomComplet}
+                  width={660}
+                  height={660}
+                  loading="eager"
+                />
+              ) : (
+                <span class="portrait-initials" aria-hidden="true">KR</span>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <h2 class="section-title" id="services-title">{tr.servicesTitre}</h2>
+      <p class="section-intro">{tr.servicesIntro}</p>
+      <div class="grid-3">
+        {
+          tr.situations.map((s) => (
+            <article class="card blueprint situation">
+              <Corners />
+              <blockquote class="situation-quote">
+                {tr.guillemets[0]}{s.citation}{tr.guillemets[1]}
+              </blockquote>
+              <h3 class="situation-title">{s.titre}</h3>
+              <p class="situation-text">{s.texte}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="methode" aria-labelledby="methode-title">
+    <div class="container">
+      <h2 class="section-title" id="methode-title">{tr.methodeTitre}</h2>
+      <p class="section-intro method-intro">{tr.methodeIntro}</p>
+      <ol class="steps">
+        {
+          tr.etapes.map((etape, i) => (
+            <li class="step">
+              <span class="step-num" aria-hidden="true">{i + 1}</span>
+              <h3 class="step-title">
+                <span class="sr-only">
+                  {tr.etape.replace('{n}', String(i + 1))}
+                </span>{etape.titre}
+              </h3>
+              <p class="step-text">{etape.texte}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="projets" aria-labelledby="projets-title">
+    <div class="container">
+      <div class="projects-head">
+        <div>
+          <h2 class="section-title" id="projets-title">{tr.projetsTitre}</h2>
+          <p class="section-intro projects-intro">{tr.projetsIntro}</p>
+        </div>
+        <a href={chemin(lang, 'realisations')} class="projects-all">
+          {tr.projetsTous(nbProjets)}
+        </a>
+      </div>
+      <div class="grid-3">
+        {
+          vedettes.map((p) => (
+            <ProjectCard projet={p} variante="accueil" lang={lang} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pourquoi-title">
+    <div class="container split">
+      <div>
+        <h2 class="section-title why-title" id="pourquoi-title">
+          {tr.pourquoiTitre}
+        </h2>
+        <p class="split-text">{tr.pourquoiTexte}</p>
+      </div>
+      <table class="table compare">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr-only">{tr.critere}</span></th>
+            <th scope="col" class="compare-me">{tr.avecMoi}</th>
+            <th scope="col">{tr.avecAgence}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            tr.comparatif.map((ligne) => (
+              <tr>
+                <th scope="row" class="compare-criterion">{ligne.critere}</th>
+                <td data-label={tr.avecMoi}>{ligne.moi}</td>
+                <td data-label={tr.avecAgence} class="compare-agency">
+                  {ligne.agence}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section section-tinted" id="faq" aria-labelledby="faq-title">
+    <div class="container split">
+      <div>
+        <h2 class="section-title faq-title" id="faq-title">{tr.faqTitre}</h2>
+        <p class="split-text">
+          {tr.faqAutre} <a href="#contact">{tr.faqEcrire}</a>{tr.faqDelai}
+        </p>
+      </div>
+      <div class="faq">
+        {
+          tr.faq.map((item) => (
+            <details class="faq-item">
+              <summary>
+                <span>{item.question}</span>
+                <span class="faq-plus" aria-hidden="true">+</span>
+              </summary>
+              <p>{item.reponse}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark contact" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div>
+        <h2 class="contact-title" id="contact-title">{tr.contactTitre}</h2>
+        <p class="contact-text">{tr.contactTexte}</p>
+        <ReservationButton lang={lang} />
+      </div>
+      <dl class="contact-infos">
+        <div>
+          <dt>{tr.contactEmail}</dt>
+          <dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+        </div>
+        <div>
+          <dt>{tr.contactReponse}</dt>
+          <dd>{tr.contactReponseDelai}</dd>
+        </div>
+        <div>
+          <dt>{tr.contactLieu}</dt>
+          <dd>{tr.contactLieuTexte}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const word = document.querySelector<HTMLElement>('.hero-word');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (word && !reduced) {
+    const words: string[] = JSON.parse(word.dataset.words ?? '[]');
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % words.length;
+      word.textContent = words[index];
+      // Relance l'animation d'entrée à chaque changement de mot.
+      word.style.animation = 'none';
+      void word.offsetWidth;
+      word.style.animation = '';
+    }, 3200);
+  }
+</script>
+
+<style>
+  @keyframes wordin {
+    from {
+      opacity: 0;
+      transform: translateY(.3em);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: .4;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--color-accent-100);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    gap: 56px;
+    padding-block: 88px 80px;
+    align-items: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    color: var(--color-accent-800);
+    background: var(--color-bg);
+    border: 1px solid var(--color-divider);
+    padding: 7px 14px;
+    margin-bottom: 28px;
+    white-space: nowrap;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-available);
+    box-shadow: 0 0 0 3px rgba(52, 210, 123, .22);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+
+  .hero-title {
+    font-size: clamp(44px, 4.6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -.01em;
+    margin: 0 0 24px;
+  }
+
+  .hero-word-line {
+    display: block;
+    min-height: 2.08em;
+    color: var(--color-accent-700);
+  }
+
+  .hero-word {
+    display: inline-block;
+    animation: wordin .45s ease-out;
+  }
+
+  .hero-lead {
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--color-neutral-700);
+    max-width: 48ch;
+    margin: 0 0 34px;
+    text-wrap: pretty;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+    color: var(--color-neutral-700);
+  }
+
+  .hero-stats li {
+    white-space: nowrap;
+  }
+
+  .hero-stats strong {
+    color: var(--color-text);
+  }
+
+  .hero-portrait {
+    display: flex;
+    justify-content: center;
+  }
+
+  .portrait {
+    position: relative;
+    width: 330px;
+    height: 330px;
+  }
+
+  .portrait-ring {
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-300);
+  }
+
+  .portrait-img {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--color-bg);
+  }
+
+  .portrait-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .portrait-initials {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 96px;
+    letter-spacing: .02em;
+    color: var(--color-accent-700);
+  }
+
+  /* Grilles */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  /* Vous vous reconnaissez ? */
+  .situation {
+    padding: 30px;
+    gap: 14px;
+  }
+
+  .situation-quote {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-accent-800);
+    font-style: italic;
+    background: var(--color-accent-100);
+    border-left: 2px solid var(--color-accent);
+    padding: 10px 14px;
+    margin: -4px 0 4px;
+  }
+
+  .situation-title {
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: normal;
+    margin: 0;
+  }
+
+  .situation-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+    margin: 0;
+  }
+
+  /* Comment ça se passe */
+  .method-intro {
+    color: inherit;
+    opacity: .8;
+    margin-bottom: 44px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--method-num);
+  }
+
+  .step {
+    padding: 26px 24px 0;
+    border-left: 1px solid rgba(242, 242, 243, .2);
+  }
+
+  .step:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .step:last-child {
+    padding-right: 0;
+  }
+
+  .step-num {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--method-num);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .step-title {
+    font-size: 23px;
+    line-height: 1.12;
+    letter-spacing: normal;
+    margin: 0 0 8px;
+  }
+
+  .step-text {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: .8;
+    margin: 0;
+  }
+
+  /* Quelques réalisations */
+  .projects-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .projects-intro {
+    margin: 0;
+  }
+
+  .projects-all {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  /* Blocs deux colonnes : pourquoi un indépendant, FAQ */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .why-title {
+    font-size: 40px;
+    margin-bottom: 14px;
+  }
+
+  .faq-title {
+    margin-bottom: 14px;
+  }
+
+  .split-text {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+    margin: 0;
+  }
+
+  .compare {
+    font-size: 16px;
+  }
+
+  .compare-me {
+    color: var(--color-accent-700);
+  }
+
+  .compare .compare-criterion {
+    font-size: inherit;
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: 400;
+    color: var(--color-neutral-700);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+  }
+
+  .compare-agency {
+    color: var(--color-neutral-600);
+  }
+
+  /* FAQ */
+  .faq-item {
+    border-top: 1px solid var(--color-divider);
+    padding: 20px 0;
+  }
+
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-plus {
+    color: var(--color-accent-700);
+    transition: transform .2s;
+  }
+
+  .faq-item[open] .faq-plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-neutral-700);
+    margin: 12px 0 0;
+  }
+
+  /* Contact */
+  .contact {
+    scroll-margin-top: var(--nav-offset);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 56px;
+    align-items: center;
+    padding-block: 88px;
+  }
+
+  .contact-title {
+    font-size: 56px;
+    line-height: 1.02;
+    margin: 0 0 18px;
+  }
+
+  .contact-text {
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 0 0 32px;
+    max-width: 48ch;
+    opacity: .85;
+  }
+
+  .contact-infos {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .contact-infos > div {
+    padding: 14px 0;
+    border-top: 1px solid var(--contact-line);
+  }
+
+  .contact-infos > div:last-child {
+    border-bottom: 1px solid var(--contact-line);
+  }
+
+  .contact-infos dt {
+    font-size: 13px;
+    opacity: .7;
+    margin-bottom: 3px;
+  }
+
+  .contact-infos dd {
+    margin: 0;
+  }
+
+  .contact-infos a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-infos a:hover {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .split,
+    .contact-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .step,
+    .step:first-child,
+    .step:last-child {
+      padding: 26px 24px 26px 0;
+      border-left: 0;
+    }
+
+    .step:nth-child(even) {
+      padding-left: 24px;
+      border-left: 1px solid rgba(242, 242, 243, .2);
+    }
+
+    .step:nth-child(n + 3) {
+      border-top: 1px solid rgba(242, 242, 243, .2);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+      padding-block: 48px 56px;
+    }
+
+    .hero-portrait {
+      order: -1;
+    }
+
+    .portrait {
+      width: 200px;
+      height: 200px;
+    }
+
+    .portrait-initials {
+      font-size: 60px;
+    }
+
+    .hero-lead {
+      font-size: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .situation {
+      padding: 24px;
+    }
+
+    .projects-head {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .why-title {
+      font-size: 32px;
+    }
+
+    .contact-grid {
+      padding-block: 64px;
+    }
+
+    .contact-title {
+      font-size: 40px;
+    }
+
+    /* Tableau comparatif affiché en cartes */
+    .compare thead {
+      display: none;
+    }
+
+    .compare,
+    .compare tbody,
+    .compare tr,
+    .compare th,
+    .compare td {
+      display: block;
+    }
+
+    .compare tr {
+      padding: 16px 0;
+      border-top: 1px solid var(--color-divider);
+    }
+
+    .compare tbody tr:hover {
+      background: none;
+    }
+
+    .compare .compare-criterion,
+    .compare td {
+      padding: 4px 0;
+      border: 0;
+    }
+
+    .compare .compare-criterion {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--color-text);
+    }
+
+    .compare td::before {
+      content: attr(data-label) " : ";
+      color: var(--color-neutral-600);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .step:nth-child(even) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .step:nth-child(n + 2) {
+      border-top: 1px solid rgba(242, 242, 243, .2);
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+      white-space: normal;
+    }
+  }
+</style>

@@ -1,17 +1,20 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 
+import { t, type Lang } from '../i18n';
+import type { Projet } from '../i18n/projets';
 import Icon from './Icon.astro';
 
 interface Props {
-  projet: CollectionEntry<'projets'>;
+  projet: Projet;
+  lang: Lang;
 }
 
-const { projet } = Astro.props;
+const { projet, lang } = Astro.props;
 const { data } = projet;
-const { Content } = await render(projet);
+const tr = t(lang).projet;
+const { Content } = await render(projet.entry);
 
 const captures = [
   ...(data.image ? [{ image: data.image, alt: data.imageAlt ?? '' }] : []),
@@ -26,6 +29,8 @@ const titreId = `detail-${projet.id}-titre`;
   id={`detail-${projet.id}`}
   data-projet={projet.id}
   aria-labelledby={titreId}
+  data-copie={tr.copie}
+  data-copie-impossible={tr.copieImpossible}
 >
   <div class="modal-inner">
     <header class="modal-head">
@@ -37,13 +42,13 @@ const titreId = `detail-${projet.id}-titre`;
         <button type="button" class="btn btn-ghost modal-copy" data-copy>
           <Icon name="link" size={16} class="icon-link" />
           <Icon name="check" size={16} class="icon-check" />
-          <span data-copy-label>Copier le lien</span>
+          <span data-copy-label>{tr.copier}</span>
         </button>
         <button
           type="button"
           class="btn btn-icon modal-close"
           data-close
-          aria-label="Fermer"
+          aria-label={tr.fermer}
           autofocus
         >
           <Icon name="x" size={20} />
@@ -56,24 +61,24 @@ const titreId = `detail-${projet.id}-titre`;
         {
           data.role && (
             <p class="modal-role">
-              <span class="modal-label">Mon rôle.</span> {data.role}
+              <span class="modal-label">{tr.role}</span> {data.role}
             </p>
           )
         }
         <div>
-          <p class="modal-label">Le projet.</p>
+          <p class="modal-label">{tr.description}</p>
           <div class="modal-content">
             <Content />
           </div>
         </div>
         <div>
-          <p class="modal-label">Technologies</p>
+          <p class="modal-label">{tr.technologies}</p>
           <ul class="modal-tags">
             {technologies.map((t) => <li class="tag tag-neutral">{t}</li>)}
           </ul>
         </div>
         <p class="modal-meta">
-          <span class="tag tag-accent">{data.secteur}</span>
+          <span class="tag tag-accent">{t(lang).secteurs[data.secteur]}</span>
           <span>{data.annee}</span>
         </p>
         {
@@ -84,7 +89,7 @@ const titreId = `detail-${projet.id}-titre`;
               target="_blank"
               rel="noopener"
             >
-              Voir le site <Icon name="arrow-up-right" size={16} />
+              {tr.voirSite} <Icon name="arrow-up-right" size={16} />
             </a>
           )
         }
@@ -159,23 +164,24 @@ const titreId = `detail-${projet.id}-titre`;
       return;
     }
     const label = copy.querySelector<HTMLElement>('[data-copy-label]');
+    const libelle = label?.textContent ?? '';
     copy.addEventListener('click', async () => {
       const url = `${location.origin}${urlSansHash()}#${dialog.dataset.projet}`;
       try {
         await navigator.clipboard.writeText(url);
         copy.classList.add('is-copied');
         if (label) {
-          label.textContent = 'Lien copié';
+          label.textContent = dialog.dataset.copie ?? libelle;
         }
       } catch {
         if (label) {
-          label.textContent = 'Copie impossible';
+          label.textContent = dialog.dataset.copieImpossible ?? libelle;
         }
       }
       setTimeout(() => {
         copy.classList.remove('is-copied');
         if (label) {
-          label.textContent = 'Copier le lien';
+          label.textContent = libelle;
         }
       }, 2000);
     });

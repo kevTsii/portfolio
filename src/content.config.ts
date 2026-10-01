@@ -37,4 +37,26 @@ const projets = defineCollection({
   ),
 });
 
-export const collections = { projets };
+// Traduction anglaise d'une fiche : <slug>/en.md, à côté de index.md. Seuls
+// les champs à traduire y figurent ; les autres viennent de index.md.
+const projetsEn = defineCollection({
+  loader: glob({
+    pattern: '*/en.md',
+    base: './src/content/projets',
+    generateId: ({ entry }) => entry.split('/')[0],
+  }),
+  schema: z.object({
+    nom: z.string().optional(),
+    titre: z.string(),
+    technologies: z.string().optional(),
+    resume: z.string().optional(),
+    role: z.string().optional(),
+    etiquetteAccueil: z.string().optional(),
+    resumeAccueil: z.string().optional(),
+    imageAlt: z.string().optional(),
+    // Textes alternatifs de la galerie, dans le même ordre que index.md.
+    galerieAlt: z.array(z.string()).optional(),
+  }),
+});
+
+export const collections = { projets, projetsEn };
