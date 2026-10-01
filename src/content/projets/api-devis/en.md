@@ -1,4 +1,5 @@
 ---
+nom: "B2B quoting API"
 titre: "Customer quotes and claims, in one place"
 etiquetteAccueil: "Retail network"
 resumeAccueil: "Each store prepares its quotes, tracks its claims and its sales targets. Connected to the brand's ERP."

@@ -8,7 +8,7 @@ ordre: 1
 vedette: true
 etiquetteAccueil: "Réseau de magasins"
 resumeAccueil: "Chaque magasin prépare ses devis, suit ses réclamations et ses objectifs de vente. Relié au logiciel de gestion de l'enseigne."
-image: ./capture.png
+image: ./architecture.png
 imageAlt: "Schéma de l'architecture hexagonale de l'API : domaine au centre, points d'entrée à gauche, base de données et connecteurs ERP à droite"
 ---
 
