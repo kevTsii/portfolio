@@ -17,6 +17,7 @@ competences:
   - "synchronisation Google Calendar"
 technologies: "Symfony 3.4, reprise d'un outil existant"
 ordre: 4
+lien: "https://appli.entheor.com/web/"
 vedette: false
 image: ./capture.png
 imageAlt: "Écran de connexion de l'application de suivi VAE"

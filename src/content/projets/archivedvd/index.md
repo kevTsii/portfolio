@@ -11,6 +11,7 @@ competences:
   - "jQuery"
 technologies: "WordPress"
 ordre: 9
+lien: "https://archivesdvd.com/"
 vedette: false
 image: ./capture.png
 imageAlt: "Page d'accueil du site ArchiveDvd"

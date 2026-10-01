@@ -41,11 +41,19 @@ const titreId = `detail-${projet.id}-titre`;
         <h2 class="modal-title" id={titreId}>{data.titre}</h2>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost modal-copy" data-copy>
-          <Icon name="link" size={16} class="icon-link" />
-          <Icon name="check" size={16} class="icon-check" />
-          <span data-copy-label>{tr.copier}</span>
-        </button>
+        {
+          data.lien && (
+            <button
+              type="button"
+              class="btn btn-ghost modal-copy"
+              data-copy={data.lien}
+            >
+              <Icon name="link" size={16} class="icon-link" />
+              <Icon name="check" size={16} class="icon-check" />
+              <span data-copy-label>{tr.copier}</span>
+            </button>
+          )
+        }
         <button
           type="button"
           class="btn btn-icon modal-close"
@@ -181,9 +189,8 @@ const titreId = `detail-${projet.id}-titre`;
         const label = copy.querySelector<HTMLElement>('[data-copy-label]');
         const libelle = label?.textContent ?? '';
         copy.addEventListener('click', async () => {
-          const url = `${location.origin}${urlSansHash()}#${dialog.dataset.projet}`;
           try {
-            await navigator.clipboard.writeText(url);
+            await navigator.clipboard.writeText(copy.dataset.copy ?? '');
             copy.classList.add('is-copied');
             if (label) {
               label.textContent = dialog.dataset.copie ?? libelle;

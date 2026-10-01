@@ -15,6 +15,7 @@ competences:
   - "Clean Architecture"
 technologies: "Laravel, Vue 3"
 ordre: 2
+lien: "https://toemm.voryko.com/"
 vedette: true
 resumeAccueil: "Des commerçants gèrent leurs produits, leurs prix, leurs commandes et leur facturation, sans jongler entre plusieurs outils."
 image: ./capture.png

@@ -19,6 +19,7 @@ competences:
   - "PHP-CS-Fixer"
 technologies: "Symfony 6.4, Stripe"
 ordre: 3
+lien: "https://www.certi-cpf.fr/"
 vedette: true
 etiquetteAccueil: "Formation professionnelle"
 image: ./capture.png
