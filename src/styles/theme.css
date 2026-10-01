@@ -7,6 +7,12 @@
   --method-num: var(--color-accent-300);
   --status-available: #34d27b;
   --nav-offset: 70px;
+  /* Mode clair : contrastes AA (texte secondaire 4,8:1, boutons 5,8:1). */
+  --color-neutral-600: #6a6a6d;
+  --color-divider: color-mix(in srgb, #1d1f20 22%, transparent);
+  /* Fond des éléments pleins (bouton principal, filtre actif). */
+  --fond-action: var(--color-accent-700);
+  --fond-action-survol: var(--color-accent-800);
 }
 
 /* Mode sombre : data-theme est posé sur <html> avant le premier rendu. */
@@ -29,6 +35,8 @@
   --contact-bg: #1c2d3d;
   --contact-fg: #e6e8ea;
   --method-num: #9dbbd8;
+  --fond-action: var(--color-accent);
+  --fond-action-survol: var(--color-accent-600);
   color-scheme: dark;
 }
 
@@ -47,6 +55,15 @@ a {
 
 a:hover {
   color: var(--color-accent-900);
+}
+
+.btn-primary {
+  background: var(--fond-action);
+  border-color: var(--fond-action);
+}
+
+.btn-primary:hover {
+  background: var(--fond-action-survol);
 }
 
 /* Les liens stylés en bouton gardent leur couleur au survol. */
@@ -120,7 +137,7 @@ a.btn-secondary:hover {
   left: 8px;
   z-index: 30;
   padding: 10px 16px;
-  background: var(--color-accent);
+  background: var(--fond-action);
   color: var(--color-bg);
   transform: translateY(-200%);
 }
