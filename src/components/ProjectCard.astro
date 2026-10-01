@@ -1,0 +1,173 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+import Corners from './Corners.astro';
+
+interface Props {
+  projet: CollectionEntry<'projets'>;
+  variante: 'accueil' | 'realisations';
+}
+
+const { projet, variante } = Astro.props;
+const { data } = projet;
+const accueil = variante === 'accueil';
+const etiquette = accueil ? (data.etiquetteAccueil ?? data.secteur) : data.secteur;
+const texte = accueil
+  ? (data.resumeAccueil ?? projet.body?.trim())
+  : projet.body?.trim();
+const Tag = accueil ? 'a' : 'article';
+---
+
+<Tag
+  class:list={['card', 'blueprint', 'project-card', { 'is-link': accueil }]}
+  href={accueil ? `/realisations#${projet.id}` : undefined}
+  id={accueil ? undefined : projet.id}
+  data-secteur={accueil ? undefined : data.secteur}
+>
+  <Corners />
+  <div class="duotone project-media">
+    {
+      data.image ? (
+        <Image
+          src={data.image}
+          alt={data.imageAlt ?? ''}
+          widths={[420, 640, 840]}
+          sizes="(max-width: 768px) 100vw, 400px"
+          class="project-img"
+        />
+      ) : (
+        <div class="project-placeholder" aria-hidden="true">
+          <span>{data.nom}</span>
+        </div>
+      )
+    }
+  </div>
+  <div class="project-body">
+    {
+      accueil ? (
+        <span class="tag tag-accent project-tag">{etiquette}</span>
+      ) : (
+        <div class="project-meta">
+          <span class="tag tag-accent">{etiquette}</span>
+          <span class="project-year">{data.annee}</span>
+        </div>
+      )
+    }
+    <h3 class="project-title">{data.titre}</h3>
+    <p class="project-text">{texte}</p>
+    {
+      !accueil && (
+        <div class="project-tech">
+          <span class="project-name">{data.nom}</span> · {data.technologies}
+        </div>
+      )
+    }
+  </div>
+</Tag>
+
+<style>
+  .project-card {
+    padding: 0;
+    gap: 0;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .15s;
+    scroll-margin-top: calc(var(--nav-offset) + 16px);
+  }
+
+  .project-card:hover {
+    border-color: var(--color-accent);
+    color: inherit;
+  }
+
+  .project-card:target {
+    border-color: var(--color-accent);
+  }
+
+  .project-media {
+    height: 190px;
+  }
+
+  .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  .project-placeholder {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background-color: var(--color-accent-100);
+    background-image:
+      linear-gradient(var(--color-divider) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-divider) 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--color-accent-700);
+    text-align: center;
+  }
+
+  .project-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .is-link .project-body {
+    padding-bottom: 26px;
+  }
+
+  .project-tag {
+    align-self: flex-start;
+  }
+
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .project-year {
+    font-size: 14px;
+    color: var(--color-neutral-600);
+    white-space: nowrap;
+  }
+
+  .project-title {
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: normal;
+    margin: 0;
+  }
+
+  .project-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+    margin: 0;
+    flex: 1;
+  }
+
+  .project-tech {
+    padding-top: 14px;
+    margin-top: 6px;
+    border-top: 1px solid var(--color-divider);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-neutral-600);
+  }
+
+  .project-name {
+    color: var(--color-neutral-700);
+  }
+</style>

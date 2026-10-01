@@ -1,0 +1,254 @@
+---
+import { NAV_LINKS, SITE } from '../data/site';
+import Corners from './Corners.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  page: 'accueil' | 'realisations';
+}
+
+const { page } = Astro.props;
+---
+
+<header class="nav" data-nav>
+  <a class="nav-brand" href="/#top">{SITE.nom}</a>
+  <nav class="nav-links" id="nav-menu" aria-label="Navigation principale">
+    {
+      NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          aria-current={
+            'page' in link && link.page === page ? 'page' : undefined
+          }
+        >
+          {link.label}
+        </a>
+      ))
+    }
+    <a href="/#contact" class="btn btn-primary blueprint nav-menu-cta">
+      <Corners />Discutons de votre projet
+    </a>
+  </nav>
+  <button
+    type="button"
+    class="btn btn-secondary nav-icon-btn"
+    data-theme-toggle
+    aria-label="Changer de thème"
+  >
+    <Icon name="sun" class="icon-sun" />
+    <Icon name="moon" class="icon-moon" />
+  </button>
+  <a href="/#contact" class="btn btn-primary blueprint nav-cta">
+    <Corners />Discutons de votre projet
+  </a>
+  <button
+    type="button"
+    class="btn btn-secondary nav-icon-btn nav-burger"
+    aria-controls="nav-menu"
+    aria-expanded="false"
+    aria-label="Ouvrir le menu"
+    data-nav-burger
+  >
+    <Icon name="menu" class="icon-menu" />
+    <Icon name="x" class="icon-close" />
+  </button>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const themeButton = document.querySelector<HTMLButtonElement>(
+    '[data-theme-toggle]',
+  );
+
+  function syncThemeLabel() {
+    const label = root.dataset.theme === 'dark'
+      ? 'Passer en mode clair'
+      : 'Passer en mode sombre';
+    themeButton?.setAttribute('aria-label', label);
+    themeButton?.setAttribute('title', label);
+  }
+
+  syncThemeLabel();
+  themeButton?.addEventListener('click', () => {
+    const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = theme;
+    try {
+      localStorage.setItem('ktr-theme', theme);
+    } catch {
+      // Stockage indisponible : le choix vaut pour la page en cours.
+    }
+    syncThemeLabel();
+  });
+
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const burger = document.querySelector<HTMLButtonElement>(
+    '[data-nav-burger]',
+  );
+
+  function setMenuOpen(open: boolean) {
+    nav?.toggleAttribute('data-open', open);
+    burger?.setAttribute('aria-expanded', String(open));
+    burger?.setAttribute(
+      'aria-label',
+      open ? 'Fermer le menu' : 'Ouvrir le menu',
+    );
+  }
+
+  burger?.addEventListener('click', () => {
+    setMenuOpen(!nav?.hasAttribute('data-open'));
+  });
+  nav?.querySelectorAll('#nav-menu a').forEach((link) => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && nav?.hasAttribute('data-open')) {
+      setMenuOpen(false);
+      burger?.focus();
+    }
+  });
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 14px 48px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-divider);
+    transition: background .3s;
+  }
+
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-brand:hover {
+    color: var(--color-text);
+  }
+
+  .nav-links {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
+    gap: 0 6px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .nav-links > a:not(.btn) {
+    color: var(--color-neutral-700);
+    text-decoration: none;
+    padding: 8px;
+  }
+
+  .nav-links > a:not(.btn):hover {
+    color: var(--color-accent-700);
+  }
+
+  .nav-links > a[aria-current='page'] {
+    color: var(--color-accent-700);
+    border-bottom: 1px solid var(--color-accent);
+  }
+
+  .nav-icon-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex: none;
+    color: var(--color-text);
+  }
+
+  .nav-cta,
+  .nav-menu-cta {
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover,
+  .nav-menu-cta:hover {
+    color: var(--color-bg);
+  }
+
+  /* Les SVG sont injectés via set:html : sélecteurs globaux. */
+  :global(:root[data-theme='dark'] .icon-moon),
+  :global(:root:not([data-theme='dark']) .icon-sun),
+  .nav-burger,
+  .nav-menu-cta,
+  .nav :global(.icon-close),
+  .nav[data-open] :global(.icon-menu) {
+    display: none;
+  }
+
+  .nav[data-open] :global(.icon-close) {
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      gap: 12px;
+      padding: 12px 16px;
+    }
+
+    .nav-burger {
+      display: inline-flex;
+    }
+
+    .nav [data-theme-toggle] {
+      margin-left: auto;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px 16px 20px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-divider);
+      font-size: 17px;
+    }
+
+    .nav[data-open] .nav-links {
+      display: flex;
+    }
+
+    .nav-links > a:not(.btn) {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .nav-links > a[aria-current='page'] {
+      border-bottom-color: var(--color-accent);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .nav-cta {
+      display: none;
+    }
+
+    .nav-menu-cta {
+      display: inline-flex;
+      margin-top: 16px;
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+  }
+</style>

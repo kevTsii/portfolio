@@ -1,0 +1,29 @@
+---
+import { SITE } from '../data/site';
+---
+
+<footer class="footer">
+  <span>© {new Date().getFullYear()} {SITE.nomComplet}</span>
+  <span class="footer-role">Développeur indépendant</span>
+</footer>
+
+<style>
+  .footer {
+    padding: 24px 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 14px;
+    color: var(--color-neutral-600);
+  }
+
+  .footer-role {
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px 16px;
+    }
+  }
+</style>
