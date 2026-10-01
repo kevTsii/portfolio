@@ -49,26 +49,28 @@ const contact = chemin(lang, 'accueil', 'contact');
       <Corners />{tr.cta}
     </a>
   </nav>
-  <button
-    type="button"
-    class="btn btn-secondary nav-icon-btn"
-    data-theme-toggle
-    aria-label={tr.theme}
-  >
-    <Icon name="sun" class="icon-sun" />
-    <Icon name="moon" class="icon-moon" />
-  </button>
-  <a
-    href={chemin(autre, page)}
-    class="btn btn-secondary nav-icon-btn nav-lang"
-    hreflang={autre}
-    lang={autre}
-    aria-label={tr.langue}
-    title={tr.langue}
-    data-lang-switch
-  >
-    {autre.toUpperCase()}
-  </a>
+  <div class="nav-tools">
+    <button
+      type="button"
+      class="btn btn-secondary nav-icon-btn"
+      data-theme-toggle
+      aria-label={tr.theme}
+    >
+      <Icon name="sun" class="icon-sun" />
+      <Icon name="moon" class="icon-moon" />
+    </button>
+    <a
+      href={chemin(autre, page)}
+      class="btn btn-secondary nav-icon-btn nav-lang"
+      hreflang={autre}
+      lang={autre}
+      aria-label={tr.langue}
+      title={tr.langue}
+      data-lang-switch
+    >
+      {autre.toUpperCase()}
+    </a>
+  </div>
   <a href={contact} class="btn btn-primary blueprint nav-cta">
     <Corners />{tr.cta}
   </a>
@@ -209,6 +211,21 @@ const contact = chemin(lang, 'accueil', 'contact');
     color: var(--color-text);
   }
 
+  .nav-tools {
+    display: flex;
+    flex: none;
+  }
+
+  /* Bordure commune entre les deux boutons. */
+  .nav-tools > * + * {
+    margin-left: -1px;
+  }
+
+  .nav-tools > :focus-visible {
+    position: relative;
+    z-index: 1;
+  }
+
   .nav-lang {
     font-size: 15px;
     letter-spacing: .04em;
@@ -255,7 +272,7 @@ const contact = chemin(lang, 'accueil', 'contact');
       display: inline-flex;
     }
 
-    .nav [data-theme-toggle] {
+    .nav-tools {
       margin-left: auto;
     }
 
