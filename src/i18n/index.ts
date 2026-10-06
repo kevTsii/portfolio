@@ -7,7 +7,7 @@ export type Page = 'accueil' | 'realisations';
 const DICTIONNAIRES: Record<Lang, Dictionnaire> = { fr, en };
 
 // Le français est à la racine, l'anglais sous /en/ (voir astro.config.mjs).
-const CHEMINS: Record<Lang, Record<Page, string>> = {
+export const CHEMINS: Record<Lang, Record<Page, string>> = {
   fr: { accueil: '/', realisations: '/realisations' },
   en: { accueil: '/en/', realisations: '/en/projects' },
 };

@@ -19,6 +19,9 @@ interface Props {
 }
 
 const { title, description, page, lang } = Astro.props;
+// Adresses absolues sur le domaine défini par `site` (astro.config.mjs).
+const absolue = (chemin: string) => new URL(chemin, Astro.site).href;
+const canonique = absolue(chemin(lang, page));
 ---
 
 <!doctype html>
@@ -31,9 +34,20 @@ const { title, description, page, lang } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
-    <link rel="alternate" hreflang="fr" href={chemin('fr', page)} />
-    <link rel="alternate" hreflang="en" href={chemin('en', page)} />
-    <link rel="alternate" hreflang="x-default" href={chemin('fr', page)} />
+    <link rel="canonical" href={canonique} />
+    <link rel="alternate" hreflang="fr" href={absolue(chemin('fr', page))} />
+    <link rel="alternate" hreflang="en" href={absolue(chemin('en', page))} />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={absolue(chemin('fr', page))}
+    />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonique} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
     <!-- Applique le thème avant le premier rendu pour éviter le flash. -->
     <script is:inline>
       (() => {
