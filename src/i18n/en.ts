@@ -22,6 +22,16 @@ export const en: Dictionnaire = {
   footer: {
     role: 'Freelance developer',
   },
+  contact: {
+    email: 'Email',
+    reponse: 'Reply',
+    reponseDelai: 'Within 48 hours',
+    lieu: 'Based in',
+    lieuTexte: 'Antananarivo, working remotely',
+    copier: 'Copy address',
+    copie: 'Address copied',
+    copieImpossible: 'Could not copy',
+  },
   secteurs: {
     'Commerce': 'Retail',
     'Formation': 'Training',
@@ -183,14 +193,6 @@ export const en: Dictionnaire = {
       '',
       'Thanks,',
     ].join('\n'),
-    contactCopier: 'Copy address',
-    contactCopie: 'Address copied',
-    contactCopieImpossible: 'Could not copy',
-    contactEmail: 'Email',
-    contactReponse: 'Reply',
-    contactReponseDelai: 'Within 48 hours',
-    contactLieu: 'Based in',
-    contactLieuTexte: 'Antananarivo, working remotely',
   },
   realisations: {
     title: 'Projects · Kevin Tsiory Rakotosoa',

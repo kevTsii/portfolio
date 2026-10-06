@@ -119,6 +119,69 @@ a.btn-secondary:hover {
   white-space: nowrap;
 }
 
+/* Gabarit commun à l'accueil et à la page agences. */
+.hero {
+  background: var(--color-accent-100);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--color-accent-800);
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
+  border-radius: 4px;
+  padding: 7px 14px;
+  margin-bottom: 28px;
+  white-space: nowrap;
+}
+
+.hero-title {
+  font-size: clamp(44px, 4.6vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -.01em;
+  margin: 0 0 24px;
+}
+
+.hero-lead {
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--color-neutral-700);
+  max-width: 48ch;
+  margin: 0 0 34px;
+  text-wrap: pretty;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Blocs deux colonnes : titre à gauche, contenu à droite. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.split-text {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-neutral-700);
+  margin: 0;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -147,9 +210,24 @@ a.btn-secondary:hover {
   color: var(--color-bg);
 }
 
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding-inline: 16px;
+  }
+
+  .hero-lead {
+    font-size: 18px;
+  }
+
+  .grid-3 {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .section > .container {
@@ -163,6 +241,13 @@ a.btn-secondary:hover {
   .section-intro {
     font-size: 17px;
     margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-actions .btn {
+    width: 100%;
+    white-space: normal;
   }
 }
 

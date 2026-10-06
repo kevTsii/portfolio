@@ -24,6 +24,16 @@ export const fr = {
   footer: {
     role: 'Développeur indépendant',
   },
+  contact: {
+    email: 'E-mail',
+    reponse: 'Réponse',
+    reponseDelai: 'Sous 48 heures',
+    lieu: 'Basé à',
+    lieuTexte: 'Antananarivo, je travaille à distance',
+    copier: 'Copier l\'adresse',
+    copie: 'Adresse copiée',
+    copieImpossible: 'Copie impossible',
+  },
   secteurs: {
     'Commerce': 'Commerce',
     'Formation': 'Formation',
@@ -196,14 +206,6 @@ export const fr = {
       '',
       'Merci,',
     ].join('\n'),
-    contactCopier: 'Copier l\'adresse',
-    contactCopie: 'Adresse copiée',
-    contactCopieImpossible: 'Copie impossible',
-    contactEmail: 'E-mail',
-    contactReponse: 'Réponse',
-    contactReponseDelai: 'Sous 48 heures',
-    contactLieu: 'Basé à',
-    contactLieuTexte: 'Antananarivo, je travaille à distance',
   },
   realisations: {
     title: 'Réalisations · Kevin Tsiory Rakotosoa',
