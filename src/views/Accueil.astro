@@ -1,13 +1,10 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
-
 import Contact from '../components/Contact.astro';
 import Corners from '../components/Corners.astro';
 import Etapes from '../components/Etapes.astro';
 import Faq from '../components/Faq.astro';
+import Portrait from '../components/Portrait.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { SITE } from '../data/site';
 import { chemin, t, type Lang } from '../i18n';
 import { getProjets } from '../i18n/projets';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -21,13 +18,6 @@ const tr = t(lang).accueil;
 const projets = await getProjets(lang);
 const vedettes = projets.filter((p) => p.data.vedette);
 const nbProjets = projets.length;
-
-// Déposer src/assets/portrait.(jpg|png|webp) pour remplacer les initiales.
-const portraits = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/portrait.{jpg,jpeg,png,webp}',
-  { eager: true },
-);
-const portrait = Object.values(portraits)[0]?.default;
 ---
 
 <BaseLayout
@@ -77,24 +67,7 @@ const portrait = Object.values(portraits)[0]?.default;
         </ul>
       </div>
       <div class="hero-portrait">
-        <div class="portrait">
-          <div class="portrait-ring" aria-hidden="true"></div>
-          <div class="duotone portrait-img">
-            {
-              portrait ? (
-                <Image
-                  src={portrait}
-                  alt={SITE.nomComplet}
-                  width={660}
-                  height={660}
-                  loading="eager"
-                />
-              ) : (
-                <span class="portrait-initials" aria-hidden="true">KR</span>
-              )
-            }
-          </div>
-        </div>
+        <Portrait lang={lang} />
       </div>
     </div>
   </section>
@@ -309,41 +282,6 @@ const portrait = Object.values(portraits)[0]?.default;
     justify-content: center;
   }
 
-  .portrait {
-    position: relative;
-    width: 330px;
-    height: 330px;
-  }
-
-  .portrait-ring {
-    position: absolute;
-    inset: -14px;
-    border-radius: 50%;
-    border: 1px solid var(--color-accent-300);
-  }
-
-  .portrait-img {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: var(--color-bg);
-  }
-
-  .portrait-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .portrait-initials {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 96px;
-    letter-spacing: .02em;
-    color: var(--color-accent-700);
-  }
 
   /* Vous vous reconnaissez ? */
   .situation {
@@ -444,14 +382,6 @@ const portrait = Object.values(portraits)[0]?.default;
       order: -1;
     }
 
-    .portrait {
-      width: 200px;
-      height: 200px;
-    }
-
-    .portrait-initials {
-      font-size: 60px;
-    }
 
     .situation {
       padding: 24px;

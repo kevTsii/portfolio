@@ -59,6 +59,8 @@ export const en: Dictionnaire = {
       + 'reliable. Quotes, invoices, inventory, customer portals: one single '
       + 'contact, from the first email to go-live.',
     badge: 'Available for new projects',
+    portraitAlt: 'Portrait of Kevin Tsiory Rakotosoa, freelance PHP '
+      + 'developer',
     heroTitre: 'Custom business software,',
     mots: ['easy to use.', 'reliable.', 'built for your trade.'],
     motsLecteur: 'easy to use, reliable and built for your trade.',

@@ -61,6 +61,8 @@ export const fr = {
       + 'fiables. Devis, factures, stocks, espace client : un seul '
       + 'interlocuteur, du premier échange à la mise en ligne.',
     badge: 'Disponible pour de nouveaux projets',
+    portraitAlt: 'Portrait de Kevin Tsiory Rakotosoa, développeur PHP '
+      + 'indépendant',
     heroTitre: 'Des logiciels de gestion sur mesure,',
     mots: ['simples à utiliser.', 'fiables.', 'faits pour votre métier.'],
     motsLecteur: 'simples à utiliser, fiables et faits pour votre métier.',
