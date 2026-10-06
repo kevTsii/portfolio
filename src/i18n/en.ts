@@ -11,6 +11,7 @@ export const en: Dictionnaire = {
     methode: 'How it works',
     realisations: 'Projects',
     faq: 'FAQ',
+    agences: 'Agencies',
     cta: 'Describe my project by email',
     themeClair: 'Switch to light mode',
     themeSombre: 'Switch to dark mode',
@@ -21,6 +22,7 @@ export const en: Dictionnaire = {
   },
   footer: {
     role: 'Freelance developer',
+    agences: 'Agencies and IT consultancies',
   },
   contact: {
     email: 'Email',
@@ -210,5 +212,176 @@ export const en: Dictionnaire = {
     affiches: '{n} projects shown',
     ctaTitre: (n: number) => `Your project could be the ${ordinalEn(n + 1)}`,
     ctaTexte: 'Describe what you need by email, I reply within 48 hours.',
+  },
+  agences: {
+    title: 'Symfony support for agencies and IT consultancies · Kevin Tsiory '
+      + 'Rakotosoa',
+    description: 'Senior Symfony developer for subcontracted work, fixed-price '
+      + 'and remote. APIs, SSO, RabbitMQ, version upgrades: I deliver in your '
+      + 'repository, white-label.',
+    surtitre: 'For agencies and IT consultancies',
+    titre: 'A senior Symfony developer for when your team is at capacity.',
+    lead: 'I take on a written scope, at a fixed price, remotely. You keep the '
+      + 'relationship with your client; I deliver in your repository, '
+      + 'following your conventions.',
+    ctaPerimetre: 'Send a scope by email',
+    ctaRealisations: 'See my projects',
+    servicesTitre: 'What I can take on',
+    services: [
+      {
+        titre: 'Symfony APIs and back offices',
+        texte: 'REST APIs, back offices, customer portals. Hexagonal '
+          + 'architecture when the project suits it, or in the style you '
+          + 'already use.',
+      },
+      {
+        titre: 'Authentication and SSO',
+        texte: 'OAuth2, OpenID Connect, single sign-on across several '
+          + 'applications.',
+      },
+      {
+        titre: 'Asynchronous processing',
+        texte: 'Message queues with RabbitMQ, imports, synchronizations and '
+          + 'heavy jobs running in the background.',
+      },
+      {
+        titre: 'Upgrades and legacy code',
+        texte: 'Moving to recent versions of Symfony and PHP 8, with tests in '
+          + 'place before touching existing code.',
+      },
+      {
+        titre: 'Integrations',
+        texte: 'Online payments (Stripe), ERP connectors, third-party '
+          + 'services.',
+      },
+      {
+        titre: 'Laravel too',
+        texte: 'Laravel back offices with a Vue 3 front end.',
+      },
+    ],
+    stackTitre: 'Stack',
+    stack: [
+      'PHP 8',
+      'Symfony 6 and 7',
+      'Laravel',
+      'Doctrine',
+      'MySQL',
+      'PostgreSQL',
+      'Docker',
+      'RabbitMQ',
+      'OAuth2 / OpenID Connect',
+      'Stripe',
+      'Vue 3',
+      'Jenkins',
+      'GitHub Actions',
+      'Git',
+    ],
+    methodeTitre: 'How we work together',
+    etapes: [
+      {
+        titre: 'You send me the scope',
+        texte: 'The requirement, access to the repository or a code sample, '
+          + 'the constraints and the delivery date.',
+      },
+      {
+        titre: 'I reply within 48 hours',
+        texte: 'With my questions, then a fixed-price quote: deliverables, '
+          + 'price, timeline.',
+      },
+      {
+        titre: 'I build in your repository',
+        texte: 'On a dedicated branch, following your conventions. Readable '
+          + 'merge requests, with tests for what I deliver.',
+      },
+      {
+        titre: 'A written update every week',
+        texte: 'What is done, what is left, what is blocking.',
+      },
+      {
+        titre: 'Delivery with a technical note',
+        texte: 'So your team can take over without me.',
+      },
+    ],
+    methodeEcrit: 'Everything happens in writing, by email or in your '
+      + 'tickets. You keep a record of every decision.',
+    attentesTitre: 'What you can expect',
+    attentes: [
+      {
+        titre: 'White label',
+        texte: 'I do not contact your client unless you ask me to.',
+      },
+      {
+        titre: 'Confidentiality',
+        texte: 'I sign your non-disclosure agreement if needed.',
+      },
+      {
+        titre: 'Time zone',
+        texte: 'Antananarivo (UTC+3), one to two hours ahead of Paris.',
+      },
+      {
+        titre: 'Fixed price only',
+        texte: 'I work on scopes defined in writing, not as a full-time '
+          + 'contractor billed by the day.',
+      },
+    ],
+    projetsTitre: 'Projects close to what you deliver',
+    projets: [
+      {
+        id: 'api-devis',
+        titre: 'B2B API for a retail chain',
+        angle: 'Symfony 7.4, hexagonal architecture, connectors to the '
+          + 'chain\'s ERP.',
+      },
+      {
+        id: 'certicpf',
+        titre: 'Certi-CPF',
+        angle: 'Symfony 6.4, multi-role portals, Stripe payments by card and '
+          + 'direct debit.',
+      },
+      {
+        id: 'toemm',
+        titre: 'ToeMM back office',
+        angle: 'Laravel, Vue 3, Clean Architecture.',
+      },
+    ],
+    faqTitre: 'Questions from agencies',
+    faqAutre: 'Another question?',
+    faq: [
+      {
+        question: 'Can you work on site at our offices?',
+        reponse: 'No, I work 100% remotely, from Antananarivo.',
+      },
+      {
+        question: 'Do you use our tools?',
+        reponse: 'Yes: your Git repository, your ticketing tool, your CI. I '
+          + 'adapt to what is already in place.',
+      },
+      {
+        question: 'What if the scope changes along the way?',
+        reponse: 'I price the change in writing before doing it. You approve '
+          + 'it, then I build it in.',
+      },
+      {
+        question: 'What size of engagement?',
+        reponse: 'Well-defined fixed-price work, from a few days to a few '
+          + 'weeks.',
+      },
+    ],
+    contactTitre: 'Send me your scope',
+    contactTexte: 'A few lines are enough to get started: the project, the '
+      + 'stack, what you want to hand over and by when. I reply within 48 '
+      + 'hours.',
+    contactBouton: 'Send a scope by email',
+    contactSujet: 'Symfony support: [agency name]',
+    contactCorps: [
+      'Hello Kevin,',
+      '',
+      'Agency:',
+      'Project and stack:',
+      'What I would like to hand over:',
+      'Desired delivery date:',
+      '',
+      'Thanks,',
+    ].join('\n'),
   },
 };

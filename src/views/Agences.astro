@@ -1,0 +1,263 @@
+---
+import Contact from '../components/Contact.astro';
+import Corners from '../components/Corners.astro';
+import Etapes from '../components/Etapes.astro';
+import Faq from '../components/Faq.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { chemin, t, type Lang } from '../i18n';
+import { getProjets } from '../i18n/projets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dico = t(lang);
+const tr = dico.agences;
+const faq = { ecrire: dico.accueil.faqEcrire, delai: dico.accueil.faqDelai };
+const projets = await getProjets(lang);
+const cartes = tr.projets.map((carte) => {
+  const projet = projets.find((p) => p.id === carte.id);
+  if (!projet) {
+    throw new Error(`[agences] projet introuvable : ${carte.id}`);
+  }
+
+  return { ...carte, projet };
+});
+---
+
+<BaseLayout
+  title={tr.title}
+  description={tr.description}
+  page="agences"
+  lang={lang}
+>
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-inner">
+      <p class="badge">{tr.surtitre}</p>
+      <h1 class="hero-title" id="hero-title">{tr.titre}</h1>
+      <p class="hero-lead">{tr.lead}</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary btn-lg blueprint">
+          <Corners />{tr.ctaPerimetre}
+        </a>
+        <a href={chemin(lang, 'realisations')} class="btn btn-secondary btn-lg">
+          {tr.ctaRealisations}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <h2 class="section-title services-title" id="services-title">
+        {tr.servicesTitre}
+      </h2>
+      <div class="grid-3">
+        {
+          tr.services.map((service) => (
+            <article class="card blueprint service">
+              <Corners />
+              <h3 class="service-title">{service.titre}</h3>
+              <p class="service-text">{service.texte}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tinted" aria-labelledby="stack-title">
+    <div class="container split">
+      <h2 class="section-title" id="stack-title">{tr.stackTitre}</h2>
+      <ul class="stack">
+        {tr.stack.map((techno) => <li class="tag tag-accent">{techno}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section
+    class="section section-dark"
+    id="methode"
+    aria-labelledby="methode-title"
+  >
+    <div class="container">
+      <h2 class="section-title method-title" id="methode-title">
+        {tr.methodeTitre}
+      </h2>
+      <Etapes etapes={tr.etapes} prefixe={dico.accueil.etape} />
+      <p class="method-note">{tr.methodeEcrit}</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="attentes-title">
+    <div class="container split">
+      <h2 class="section-title" id="attentes-title">{tr.attentesTitre}</h2>
+      <dl class="expect">
+        {
+          tr.attentes.map((attente) => (
+            <div>
+              <dt>{attente.titre}</dt>
+              <dd>{attente.texte}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="projets" aria-labelledby="projets-title">
+    <div class="container">
+      <h2 class="section-title projects-title" id="projets-title">
+        {tr.projetsTitre}
+      </h2>
+      <div class="grid-3">
+        {
+          cartes.map((carte) => (
+            <ProjectCard
+              projet={carte.projet}
+              variante="accueil"
+              lang={lang}
+              titre={carte.titre}
+              texte={carte.angle}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tinted" id="faq" aria-labelledby="faq-title">
+    <div class="container split">
+      <div>
+        <h2 class="section-title faq-title" id="faq-title">{tr.faqTitre}</h2>
+        <p class="split-text">
+          {tr.faqAutre} <a href="#contact">{faq.ecrire}</a>{faq.delai}
+        </p>
+      </div>
+      <Faq items={tr.faq} />
+    </div>
+  </section>
+
+  <Contact
+    lang={lang}
+    titre={tr.contactTitre}
+    texte={tr.contactTexte}
+    bouton={tr.contactBouton}
+    sujet={tr.contactSujet}
+    corps={tr.contactCorps}
+  />
+</BaseLayout>
+
+<style>
+  .hero-inner {
+    padding-block: 88px 52px;
+  }
+
+  .hero-title {
+    max-width: 18ch;
+  }
+
+  .hero-lead {
+    max-width: 56ch;
+  }
+
+  .services-title,
+  .projects-title {
+    margin-bottom: 40px;
+  }
+
+  .service {
+    padding: 30px;
+    gap: 12px;
+  }
+
+  .service-title {
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: normal;
+    margin: 0;
+  }
+
+  .service-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+    margin: 0;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stack .tag {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+
+  .method-title {
+    margin-bottom: 44px;
+  }
+
+  .method-note {
+    margin: 40px 0 0;
+    padding: 18px 22px;
+    border: 1px solid var(--contact-line);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 64ch;
+  }
+
+  .expect {
+    margin: 0;
+  }
+
+  .expect > div {
+    padding: 18px 0;
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .expect > div:last-child {
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .expect dt {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .expect dd {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-neutral-700);
+  }
+
+  .faq-title {
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner {
+      padding-block: 48px 40px;
+    }
+
+    .service {
+      padding: 24px;
+    }
+
+    .services-title,
+    .projects-title,
+    .method-title {
+      margin-bottom: 32px;
+    }
+  }
+</style>

@@ -12,6 +12,7 @@ export const fr = {
     methode: 'Comment ça marche',
     realisations: 'Réalisations',
     faq: 'Questions',
+    agences: 'Vous êtes une agence ?',
     cta: 'Décrire mon projet par e-mail',
     themeClair: 'Passer en mode clair',
     themeSombre: 'Passer en mode sombre',
@@ -23,6 +24,7 @@ export const fr = {
   },
   footer: {
     role: 'Développeur indépendant',
+    agences: 'Agences et ESN',
   },
   contact: {
     email: 'E-mail',
@@ -225,6 +227,184 @@ export const fr = {
     affiches: '{n} projets affichés',
     ctaTitre: (n: number) => `Votre projet pourrait être le ${ordinalFr(n + 1)}`,
     ctaTexte: 'Décrivez votre besoin par e-mail, je vous réponds sous 48 h.',
+  },
+  agences: {
+    title: 'Renfort Symfony pour agences et ESN · Kevin Tsiory Rakotosoa',
+    description: 'Développeur Symfony senior en sous-traitance, au forfait et '
+      + 'à distance. API, SSO, RabbitMQ, montées de version : je livre dans '
+      + 'votre dépôt, en marque blanche.',
+    surtitre: 'Pour les agences et les ESN',
+    titre: 'Un développeur Symfony senior quand votre équipe est pleine.',
+    lead: 'Je prends en charge un périmètre écrit, au forfait, à distance. '
+      + 'Vous gardez la relation avec votre client ; je livre dans votre '
+      + 'dépôt, en suivant vos conventions.',
+    ctaPerimetre: 'Envoyer un périmètre par e-mail',
+    ctaRealisations: 'Voir les réalisations',
+    servicesTitre: 'Ce que je peux prendre en charge',
+    services: [
+      {
+        titre: 'API et back-offices Symfony',
+        texte: 'API REST, back-offices, espaces client. Architecture '
+          + 'hexagonale si le projet s\'y prête, ou dans le style déjà en '
+          + 'place chez vous.',
+      },
+      {
+        titre: 'Authentification et SSO',
+        texte: 'OAuth2, OpenID Connect, connexion unique entre plusieurs '
+          + 'applications.',
+      },
+      {
+        titre: 'Traitements asynchrones',
+        texte: 'Files de messages avec RabbitMQ, imports, synchronisations et '
+          + 'tâches lourdes en arrière-plan.',
+      },
+      {
+        titre: 'Montées de version et reprise de code',
+        texte: 'Passage vers des versions récentes de Symfony et PHP 8, avec '
+          + 'des tests posés avant de toucher au code existant.',
+      },
+      {
+        titre: 'Intégrations',
+        texte: 'Paiement en ligne (Stripe), connecteurs ERP, services tiers.',
+      },
+      {
+        titre: 'Laravel aussi',
+        texte: 'Back-offices Laravel avec un front Vue 3.',
+      },
+    ],
+    stackTitre: 'Stack',
+    // TODO : ajouter « API Platform » seulement après confirmation.
+    stack: [
+      'PHP 8',
+      'Symfony 6 et 7',
+      'Laravel',
+      'Doctrine',
+      'MySQL',
+      'PostgreSQL',
+      'Docker',
+      'RabbitMQ',
+      'OAuth2 / OpenID Connect',
+      'Stripe',
+      'Vue 3',
+      'Jenkins',
+      'GitHub Actions',
+      'Git',
+    ],
+    methodeTitre: 'Comment on travaille',
+    etapes: [
+      {
+        titre: 'Vous m\'envoyez le périmètre',
+        texte: 'Le besoin, un accès au dépôt ou un extrait de code, les '
+          + 'contraintes et la date de livraison.',
+      },
+      {
+        titre: 'Je réponds sous 48 h',
+        texte: 'Avec mes questions, puis un devis au forfait : livrables, '
+          + 'prix, délai.',
+      },
+      {
+        titre: 'Je développe dans votre dépôt',
+        texte: 'Sur une branche dédiée, avec vos conventions. Des merge '
+          + 'requests lisibles et des tests sur ce que je livre.',
+      },
+      {
+        titre: 'Un point écrit chaque semaine',
+        texte: 'Ce qui est fait, ce qui reste, ce qui bloque.',
+      },
+      {
+        titre: 'Livraison avec une note technique',
+        texte: 'Pour que votre équipe reprenne la main sans moi.',
+      },
+    ],
+    methodeEcrit: 'Tout se fait par écrit, par e-mail ou dans vos tickets. '
+      + 'Vous gardez une trace de chaque décision.',
+    attentesTitre: 'Ce que vous pouvez attendre',
+    attentes: [
+      // [À VALIDER]
+      {
+        titre: 'Marque blanche',
+        texte: 'Je ne contacte pas votre client, sauf si vous me le '
+          + 'demandez.',
+      },
+      // [À VALIDER]
+      {
+        titre: 'Confidentialité',
+        texte: 'Je signe votre accord de confidentialité si besoin.',
+      },
+      {
+        titre: 'Fuseau horaire',
+        texte: 'Antananarivo (UTC+3), une à deux heures d\'avance sur Paris.',
+      },
+      {
+        titre: 'Forfait uniquement',
+        texte: 'Je travaille sur des périmètres définis par écrit, pas en '
+          + 'régie à temps plein.',
+      },
+    ],
+    projetsTitre: 'Projets proches de ce que vous livrez',
+    // id : fiche de /realisations ; angle : présentation technique.
+    // TODO : e-Fokontany (RabbitMQ, ancre #e-fokontany) en quatrième carte ?
+    projets: [
+      {
+        id: 'api-devis',
+        titre: 'API B2B pour un réseau de magasins',
+        angle: 'Symfony 7.4, architecture hexagonale, connecteurs vers '
+          + 'l\'ERP de l\'enseigne.',
+      },
+      {
+        id: 'certicpf',
+        titre: 'Certi-CPF',
+        angle: 'Symfony 6.4, espaces multi-rôles, paiement Stripe par carte '
+          + 'et prélèvement.',
+      },
+      {
+        id: 'toemm',
+        titre: 'Back-office ToeMM',
+        angle: 'Laravel, Vue 3, Clean Architecture.',
+      },
+    ],
+    faqTitre: 'Questions des agences',
+    faqAutre: 'Une autre question ?',
+    faq: [
+      {
+        question: 'Vous pouvez venir dans nos locaux ?',
+        reponse: 'Non, je travaille à 100 % à distance, depuis Antananarivo.',
+      },
+      {
+        question: 'Vous utilisez nos outils ?',
+        reponse: 'Oui : votre dépôt Git, votre outil de tickets, votre CI. Je '
+          + 'm\'adapte à ce qui existe.',
+      },
+      {
+        question: 'Et si le périmètre change en cours de route ?',
+        reponse: 'Je chiffre le changement par écrit avant de le faire. Vous '
+          + 'validez, puis je l\'intègre.',
+      },
+      // [À VALIDER]
+      {
+        question: 'Quelle taille de mission ?',
+        reponse: 'Des forfaits bien délimités, de quelques jours à quelques '
+          + 'semaines de travail.',
+      },
+      // TODO : « Comment se passe la facturation ? » (structure, devise,
+      // modalités). Ne pas publier tant que le texte manque.
+    ],
+    contactTitre: 'Envoyez-moi votre périmètre',
+    contactTexte: 'Quelques lignes suffisent pour commencer : le projet, la '
+      + 'stack, ce que vous voulez me confier et pour quand. Je réponds sous '
+      + '48 h.',
+    contactBouton: 'Envoyer un périmètre par e-mail',
+    contactSujet: 'Renfort Symfony : [nom de l\'agence]',
+    contactCorps: [
+      'Bonjour Kevin,',
+      '',
+      'Agence :',
+      'Projet et stack :',
+      'Ce que je voudrais vous confier :',
+      'Date de livraison souhaitée :',
+      '',
+      'Merci,',
+    ].join('\n'),
   },
 };
 

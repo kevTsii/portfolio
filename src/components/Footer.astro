@@ -1,17 +1,19 @@
 ---
 import { SITE } from '../data/site';
-import { t, type Lang } from '../i18n';
+import { chemin, t, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const tr = t(lang).footer;
 ---
 
 <footer class="footer">
   <span>© {new Date().getFullYear()} {SITE.nomComplet}</span>
-  <span class="footer-role">{t(lang).footer.role}</span>
+  <a href={chemin(lang, 'agences')}>{tr.agences}</a>
+  <span class="footer-role">{tr.role}</span>
 </footer>
 
 <style>
