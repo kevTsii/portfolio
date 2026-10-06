@@ -3,6 +3,12 @@ export const SITE = {
   nomComplet: 'Kevin Tsiory Rakotosoa',
   // Seule source de l'adresse affichée et des liens mailto.
   email: 'me@kevin-tsiory-rakotosoa.com',
+  // Liens du footer, masqués tant que l'URL est vide.
+  // TODO : renseigner les URLs LinkedIn et GitHub.
+  reseaux: {
+    linkedin: '',
+    github: '',
+  },
 } as const;
 
 // Lien mailto vers SITE.email, avec un sujet et un corps pré-remplis.

@@ -25,6 +25,8 @@ export const fr = {
   footer: {
     role: 'Développeur indépendant',
     agences: 'Agences et ESN',
+    linkedin: 'Mon profil LinkedIn',
+    github: 'Mon profil GitHub',
   },
   contact: {
     email: 'E-mail',

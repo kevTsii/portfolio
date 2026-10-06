@@ -23,6 +23,8 @@ export const en: Dictionnaire = {
   footer: {
     role: 'Freelance developer',
     agences: 'Agencies and IT consultancies',
+    linkedin: 'My LinkedIn profile',
+    github: 'My GitHub profile',
   },
   contact: {
     email: 'Email',
