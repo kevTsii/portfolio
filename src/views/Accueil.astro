@@ -5,7 +5,7 @@ import { Image } from 'astro:assets';
 import Corners from '../components/Corners.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ReservationButton from '../components/ReservationButton.astro';
-import { SITE } from '../data/site';
+import { mailto, SITE } from '../data/site';
 import { chemin, t, type Lang } from '../i18n';
 import { getProjets } from '../i18n/projets';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -228,7 +228,7 @@ const portrait = Object.values(portraits)[0]?.default;
       <dl class="contact-infos">
         <div>
           <dt>{tr.contactEmail}</dt>
-          <dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+          <dd><a href={mailto()}>{SITE.email}</a></dd>
         </div>
         <div>
           <dt>{tr.contactReponse}</dt>

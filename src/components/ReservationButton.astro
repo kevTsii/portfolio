@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../data/site';
+import { mailto } from '../data/site';
 import { t, type Lang } from '../i18n';
 import Corners from './Corners.astro';
 
@@ -10,7 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<a href={SITE.reservationUrl} class="blueprint reservation-btn">
+<a href={mailto()} class="blueprint reservation-btn">
   <Corners />{t(lang).reservation}
 </a>
 
