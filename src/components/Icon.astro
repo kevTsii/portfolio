@@ -1,12 +1,20 @@
 ---
 // Icône Lucide inline, au trait de 1.5 comme dans la maquette.
 const icons = import.meta.glob<string>(
-  '/node_modules/lucide-static/icons/{sun,moon,menu,x,link,check,arrow-up-right}.svg',
+  '/node_modules/lucide-static/icons/{sun,moon,menu,x,link,check,copy,arrow-up-right}.svg',
   { query: '?raw', import: 'default', eager: true },
 );
 
 interface Props {
-  name: 'sun' | 'moon' | 'menu' | 'x' | 'link' | 'check' | 'arrow-up-right';
+  name:
+    | 'sun'
+    | 'moon'
+    | 'menu'
+    | 'x'
+    | 'link'
+    | 'check'
+    | 'copy'
+    | 'arrow-up-right';
   size?: number;
   class?: string;
 }

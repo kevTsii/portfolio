@@ -12,7 +12,7 @@ export const fr = {
     methode: 'Comment ça marche',
     realisations: 'Réalisations',
     faq: 'Questions',
-    cta: 'Discutons de votre projet',
+    cta: 'Décrire mon projet par e-mail',
     themeClair: 'Passer en mode clair',
     themeSombre: 'Passer en mode sombre',
     theme: 'Changer de thème',
@@ -24,7 +24,6 @@ export const fr = {
   footer: {
     role: 'Développeur indépendant',
   },
-  reservation: 'Réserver mon appel gratuit',
   secteurs: {
     'Commerce': 'Commerce',
     'Formation': 'Formation',
@@ -46,16 +45,16 @@ export const fr = {
     title: 'Kevin Tsiory Rakotosoa · Développeur PHP indépendant',
     description: 'Des logiciels de gestion sur mesure, simples à utiliser et '
       + 'fiables. Devis, factures, stocks, espace client : un seul '
-      + 'interlocuteur, du premier appel à la mise en ligne.',
+      + 'interlocuteur, du premier échange à la mise en ligne.',
     badge: 'Disponible pour de nouveaux projets',
     heroTitre: 'Des logiciels de gestion sur mesure,',
     mots: ['simples à utiliser.', 'fiables.', 'faits pour votre métier.'],
     motsLecteur: 'simples à utiliser, fiables et faits pour votre métier.',
     heroLead: 'Devis, factures, stocks, espace client : je crée les outils web '
       + 'dont votre entreprise a besoin, ou je remets en forme ceux que vous '
-      + 'avez déjà. Un seul interlocuteur, du premier appel à la mise en '
+      + 'avez déjà. Un seul interlocuteur, du premier échange à la mise en '
       + 'ligne.',
-    ctaAppel: 'Réserver un appel gratuit de 30 min',
+    ctaEmail: 'Décrire mon projet par e-mail',
     ctaRealisations: 'Voir mes réalisations',
     statExperience: ['5 ans', 'd\'expérience'],
     statOutils: ['outils', 'en service chez des clients'],
@@ -93,8 +92,9 @@ export const fr = {
     etape: 'Étape {n} : ',
     etapes: [
       {
-        titre: 'On en parle',
-        texte: 'Un appel gratuit de 30 minutes pour comprendre votre besoin.',
+        titre: 'Vous m\'écrivez',
+        texte: 'Décrivez votre besoin en quelques lignes. Je vous réponds '
+          + 'sous 48 h avec mes questions.',
       },
       {
         titre: 'Je vous propose',
@@ -103,7 +103,8 @@ export const fr = {
       },
       {
         titre: 'Je construis',
-        texte: 'Un point chaque semaine. Vous testez au fur et à mesure.',
+        texte: 'Un point écrit chaque semaine. Vous testez au fur et à '
+          + 'mesure.',
       },
       {
         titre: 'On met en ligne',
@@ -156,9 +157,9 @@ export const fr = {
       },
       {
         question: 'Combien ça coûte ?',
-        reponse: 'Ça dépend du projet. Après notre appel, je vous envoie un '
-          + 'devis écrit avec un prix et des délais. Vous décidez ensuite, '
-          + 'sans engagement.',
+        reponse: 'Ça dépend du projet. Après nos premiers échanges par '
+          + 'e-mail, je vous envoie un devis écrit avec un prix et des '
+          + 'délais. Vous décidez ensuite, sans engagement.',
       },
       {
         question: 'J\'ai déjà un logiciel, faut-il tout refaire ?',
@@ -168,9 +169,10 @@ export const fr = {
       },
       {
         question: 'Vous êtes à Madagascar : comment on travaille ?',
-        reponse: 'À distance, par visio et par écrit. Il n\'y a qu\'une à '
-          + 'deux heures de décalage avec la France : nos journées se '
-          + 'recouvrent presque entièrement.',
+        reponse: 'À distance, par e-mail. Tout est écrit, donc rien ne se '
+          + 'perd : votre besoin, les décisions prises, ce qui a été livré. '
+          + 'Il n\'y a qu\'une à deux heures de décalage avec la France, nos '
+          + 'journées se recouvrent presque entièrement.',
       },
       {
         question: 'Et après la mise en ligne ?',
@@ -179,9 +181,27 @@ export const fr = {
           + 'toute la documentation.',
       },
     ],
-    contactTitre: 'Parlons de votre projet',
-    contactTexte: '30 minutes, gratuitement, pour comprendre votre besoin. Je '
-      + 'vous dirai franchement si je peux vous aider.',
+    contactTitre: 'Écrivez-moi',
+    contactTexte: 'Décrivez votre besoin en quelques lignes : ce que fait '
+      + 'votre entreprise, ce qui vous fait perdre du temps, l\'outil que '
+      + 'vous utilisez aujourd\'hui. Je vous réponds sous 48 h et je vous '
+      + 'dis franchement si je peux vous aider.',
+    contactBouton: 'Décrire mon projet par e-mail',
+    // Sujet et corps pré-remplis du lien mailto.
+    contactSujet: 'Projet : [nom de votre entreprise]',
+    contactCorps: [
+      'Bonjour Kevin,',
+      '',
+      'Mon entreprise :',
+      'Ce que je voudrais améliorer :',
+      'L\'outil que j\'utilise aujourd\'hui :',
+      'Délai souhaité :',
+      '',
+      'Merci,',
+    ].join('\n'),
+    contactCopier: 'Copier l\'adresse',
+    contactCopie: 'Adresse copiée',
+    contactCopieImpossible: 'Copie impossible',
     contactEmail: 'E-mail',
     contactReponse: 'Réponse',
     contactReponseDelai: 'Sous 48 heures',
@@ -205,7 +225,7 @@ export const fr = {
     affiche: '{n} projet affiché',
     affiches: '{n} projets affichés',
     ctaTitre: (n: number) => `Votre projet pourrait être le ${ordinalFr(n + 1)}`,
-    ctaTexte: 'Un appel gratuit de 30 minutes pour en parler.',
+    ctaTexte: 'Décrivez votre besoin par e-mail, je vous réponds sous 48 h.',
   },
 };
 

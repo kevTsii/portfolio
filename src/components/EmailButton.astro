@@ -1,24 +1,23 @@
 ---
-import { mailto } from '../data/site';
-import { t, type Lang } from '../i18n';
 import Corners from './Corners.astro';
 
 interface Props {
-  lang: Lang;
+  // Lien mailto construit avec mailto() (src/data/site.ts).
+  href: string;
+  label: string;
 }
 
-const { lang } = Astro.props;
+const { href, label } = Astro.props;
 ---
 
-<a href={mailto()} class="blueprint reservation-btn">
-  <Corners />{t(lang).reservation}
+<a href={href} class="blueprint email-btn">
+  <Corners />{label}
 </a>
 
 <style>
-  .reservation-btn {
+  .email-btn {
     display: inline-flex;
     align-items: center;
-    white-space: nowrap;
     text-decoration: none;
     font-size: 17px;
     font-weight: 500;
@@ -28,7 +27,7 @@ const { lang } = Astro.props;
     transition: opacity .15s;
   }
 
-  .reservation-btn:hover {
+  .email-btn:hover {
     color: var(--contact-bg);
     opacity: .88;
   }

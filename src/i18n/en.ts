@@ -11,7 +11,7 @@ export const en: Dictionnaire = {
     methode: 'How it works',
     realisations: 'Projects',
     faq: 'FAQ',
-    cta: 'Let\'s talk about your project',
+    cta: 'Describe my project by email',
     themeClair: 'Switch to light mode',
     themeSombre: 'Switch to dark mode',
     theme: 'Change theme',
@@ -22,7 +22,6 @@ export const en: Dictionnaire = {
   footer: {
     role: 'Freelance developer',
   },
-  reservation: 'Book my free call',
   secteurs: {
     'Commerce': 'Retail',
     'Formation': 'Training',
@@ -44,15 +43,15 @@ export const en: Dictionnaire = {
     title: 'Kevin Tsiory Rakotosoa · Freelance PHP developer',
     description: 'Custom business software that is easy to use and '
       + 'reliable. Quotes, invoices, inventory, customer portals: one single '
-      + 'contact, from the first call to go-live.',
+      + 'contact, from the first email to go-live.',
     badge: 'Available for new projects',
     heroTitre: 'Custom business software,',
     mots: ['easy to use.', 'reliable.', 'built for your trade.'],
     motsLecteur: 'easy to use, reliable and built for your trade.',
     heroLead: 'Quotes, invoices, inventory, customer portals: I build the web '
       + 'tools your business needs, or bring the ones you already have back '
-      + 'into shape. One single contact, from the first call to go-live.',
-    ctaAppel: 'Book a free 30-min call',
+      + 'into shape. One single contact, from the first email to go-live.',
+    ctaEmail: 'Describe my project by email',
     ctaRealisations: 'See my work',
     statExperience: ['5 years', 'of experience'],
     statOutils: ['tools', 'in use by clients'],
@@ -87,8 +86,9 @@ export const en: Dictionnaire = {
     etape: 'Step {n}: ',
     etapes: [
       {
-        titre: 'We talk',
-        texte: 'A free 30-minute call to understand what you need.',
+        titre: 'You write to me',
+        texte: 'Describe what you need in a few lines. I reply within 48 '
+          + 'hours with my questions.',
       },
       {
         titre: 'I send a proposal',
@@ -97,7 +97,7 @@ export const en: Dictionnaire = {
       },
       {
         titre: 'I build',
-        texte: 'A check-in every week. You test as we go.',
+        texte: 'A written update every week. You test as we go.',
       },
       {
         titre: 'We go live',
@@ -148,9 +148,9 @@ export const en: Dictionnaire = {
       },
       {
         question: 'How much does it cost?',
-        reponse: 'It depends on the project. After our call, I send you a '
-          + 'written quote with a price and a timeline. You decide then, with '
-          + 'no commitment.',
+        reponse: 'It depends on the project. Once we have exchanged a few '
+          + 'emails, I send you a written quote with a price and a timeline. '
+          + 'You decide then, with no commitment.',
       },
       {
         question: 'I already have software. Do I need to start over?',
@@ -159,9 +159,10 @@ export const en: Dictionnaire = {
       },
       {
         question: 'You\'re based in Madagascar: how do we work together?',
-        reponse: 'Remotely, over video calls and in writing. Madagascar is on '
-          + 'UTC+3, only one or two hours ahead of Western Europe, so our '
-          + 'working days overlap almost entirely.',
+        reponse: 'Remotely, by email. Everything is in writing, so nothing '
+          + 'gets lost: what you need, the decisions we made, what was '
+          + 'delivered. Madagascar is on UTC+3, only one or two hours ahead of '
+          + 'Western Europe, so our working days overlap almost entirely.',
       },
       {
         question: 'What happens after go-live?',
@@ -170,9 +171,25 @@ export const en: Dictionnaire = {
           + 'documentation.',
       },
     ],
-    contactTitre: 'Let\'s talk about your project',
-    contactTexte: '30 minutes, free of charge, to understand what you need. '
-      + 'I will tell you honestly whether I can help.',
+    contactTitre: 'Write to me',
+    contactTexte: 'Describe what you need in a few lines: what your business '
+      + 'does, what is wasting your time, the tool you use today. I reply '
+      + 'within 48 hours and tell you honestly whether I can help.',
+    contactBouton: 'Describe my project by email',
+    contactSujet: 'Project: [your company name]',
+    contactCorps: [
+      'Hello Kevin,',
+      '',
+      'My company:',
+      'What I would like to improve:',
+      'The tool I use today:',
+      'Desired timeline:',
+      '',
+      'Thanks,',
+    ].join('\n'),
+    contactCopier: 'Copy address',
+    contactCopie: 'Address copied',
+    contactCopieImpossible: 'Could not copy',
     contactEmail: 'Email',
     contactReponse: 'Reply',
     contactReponseDelai: 'Within 48 hours',
@@ -194,6 +211,6 @@ export const en: Dictionnaire = {
     affiche: '{n} project shown',
     affiches: '{n} projects shown',
     ctaTitre: (n: number) => `Your project could be the ${ordinalEn(n + 1)}`,
-    ctaTexte: 'A free 30-minute call to talk it through.',
+    ctaTexte: 'Describe what you need by email, I reply within 48 hours.',
   },
 };

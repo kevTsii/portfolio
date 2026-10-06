@@ -1,8 +1,9 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
 import ProjectModal from '../components/ProjectModal.astro';
-import ReservationButton from '../components/ReservationButton.astro';
+import EmailButton from '../components/EmailButton.astro';
 import { SECTEURS } from '../content.config';
+import { mailto } from '../data/site';
 import { chemin, t, type Lang } from '../i18n';
 import { getProjets } from '../i18n/projets';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -82,7 +83,10 @@ const filtres = [
         </h2>
         <p class="cta-text">{tr.realisations.ctaTexte}</p>
       </div>
-      <ReservationButton lang={lang} />
+      <EmailButton
+        href={mailto(tr.accueil.contactSujet, tr.accueil.contactCorps)}
+        label={tr.accueil.contactBouton}
+      />
     </div>
   </section>
 </BaseLayout>

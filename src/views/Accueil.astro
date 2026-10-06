@@ -3,8 +3,9 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 
 import Corners from '../components/Corners.astro';
+import EmailButton from '../components/EmailButton.astro';
+import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ReservationButton from '../components/ReservationButton.astro';
 import { mailto, SITE } from '../data/site';
 import { chemin, t, type Lang } from '../i18n';
 import { getProjets } from '../i18n/projets';
@@ -55,7 +56,7 @@ const portrait = Object.values(portraits)[0]?.default;
         <p class="hero-lead">{tr.heroLead}</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary btn-lg blueprint">
-            <Corners />{tr.ctaAppel}
+            <Corners />{tr.ctaEmail}
           </a>
           <a href="#projets" class="btn btn-secondary btn-lg">
             {tr.ctaRealisations}
@@ -223,12 +224,30 @@ const portrait = Object.values(portraits)[0]?.default;
       <div>
         <h2 class="contact-title" id="contact-title">{tr.contactTitre}</h2>
         <p class="contact-text">{tr.contactTexte}</p>
-        <ReservationButton lang={lang} />
+        <EmailButton
+          href={mailto(tr.contactSujet, tr.contactCorps)}
+          label={tr.contactBouton}
+        />
       </div>
       <dl class="contact-infos">
         <div>
           <dt>{tr.contactEmail}</dt>
-          <dd><a href={mailto()}>{SITE.email}</a></dd>
+          <dd class="contact-email">
+            <a href={mailto()}>{SITE.email}</a>
+            <button
+              type="button"
+              class="btn btn-ghost contact-copy"
+              data-copy-email={SITE.email}
+              data-copie={tr.contactCopie}
+              data-copie-impossible={tr.contactCopieImpossible}
+              hidden
+            >
+              <Icon name="copy" size={16} class="icon-copy" />
+              <Icon name="check" size={16} class="icon-check" />
+              <span data-copy-label>{tr.contactCopier}</span>
+            </button>
+            <span class="sr-only" aria-live="polite" data-copy-status></span>
+          </dd>
         </div>
         <div>
           <dt>{tr.contactReponse}</dt>
@@ -265,7 +284,47 @@ const portrait = Object.values(portraits)[0]?.default;
     }, 3200);
   }
 
+  // Bouton « Copier l'adresse », affiché seulement si le presse-papiers
+  // est disponible (le lien mailto reste le repli).
+  function initCopie(): void {
+    const bouton = document.querySelector<HTMLButtonElement>(
+      '[data-copy-email]',
+    );
+    const label = bouton?.querySelector<HTMLElement>('[data-copy-label]');
+    const statut = document.querySelector<HTMLElement>('[data-copy-status]');
+    if (!bouton || !label || !navigator.clipboard) {
+      return;
+    }
+    const libelle = label.textContent ?? '';
+    let minuterieCopie: number | undefined;
+    bouton.hidden = false;
+    bouton.addEventListener('click', async () => {
+      const textes = bouton.dataset;
+      let message = textes.copieImpossible ?? libelle;
+      try {
+        await navigator.clipboard.writeText(textes.copyEmail ?? '');
+        message = textes.copie ?? libelle;
+        bouton.classList.add('is-copied');
+      } catch {
+        // Le message d'échec reste affiché.
+      }
+      label.textContent = message;
+      if (statut) {
+        statut.textContent = message;
+      }
+      window.clearTimeout(minuterieCopie);
+      minuterieCopie = window.setTimeout(() => {
+        bouton.classList.remove('is-copied');
+        label.textContent = libelle;
+        if (statut) {
+          statut.textContent = '';
+        }
+      }, 2000);
+    });
+  }
+
   document.addEventListener('astro:page-load', initMots);
+  document.addEventListener('astro:page-load', initCopie);
   // Arrête le défilement des mots en quittant la page.
   document.addEventListener('astro:before-swap', () => {
     window.clearInterval(minuterie);
@@ -682,6 +741,38 @@ const portrait = Object.values(portraits)[0]?.default;
   .contact-infos a:hover {
     color: inherit;
     text-decoration: underline;
+  }
+
+  .contact-email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-copy {
+    gap: 6px;
+    padding: 4px 8px;
+    margin-left: -8px;
+    font-size: 14px;
+    color: inherit;
+    opacity: .85;
+  }
+
+  .contact-copy:hover {
+    opacity: 1;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+
+  .contact-copy[hidden],
+  .contact-copy :global(.icon-check),
+  .contact-copy.is-copied :global(.icon-copy) {
+    display: none;
+  }
+
+  .contact-copy.is-copied :global(.icon-check) {
+    display: block;
   }
 
   /* Responsive */
