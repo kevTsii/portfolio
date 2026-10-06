@@ -132,6 +132,7 @@ export const fr = {
     projetsIntro: 'Des outils utilisés au quotidien par des entreprises et '
       + 'des services publics.',
     projetsTous: (n: number) => `Voir les ${n} projets →`,
+    temoignagesTitre: 'Ils m\'ont fait confiance',
     pourquoiTitre: 'Indépendant ou agence ?',
     pourquoiTexte: 'Une agence a du sens pour un gros projet qui mobilise '
       + 'plusieurs métiers. Pour un outil de gestion bien délimité, '

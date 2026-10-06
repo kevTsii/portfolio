@@ -124,6 +124,7 @@ export const en: Dictionnaire = {
     projetsTitre: 'Selected work',
     projetsIntro: 'Tools used every day by businesses and public services.',
     projetsTous: (n: number) => `See all ${n} projects →`,
+    temoignagesTitre: 'They trusted me',
     pourquoiTitre: 'Freelancer or agency?',
     pourquoiTexte: 'An agency makes sense for a large project that needs '
       + 'several kinds of expertise. For a well-scoped business tool, working '

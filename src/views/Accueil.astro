@@ -5,6 +5,7 @@ import Etapes from '../components/Etapes.astro';
 import Faq from '../components/Faq.astro';
 import Portrait from '../components/Portrait.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { TEMOIGNAGES } from '../data/testimonials';
 import { chemin, t, type Lang } from '../i18n';
 import { getProjets } from '../i18n/projets';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -121,6 +122,34 @@ const nbProjets = projets.length;
       </div>
     </div>
   </section>
+
+  {
+    TEMOIGNAGES.length > 0 && (
+      <section class="section" aria-labelledby="temoignages-title">
+        <div class="container">
+          <h2 class="section-title testimonials-title" id="temoignages-title">
+            {tr.temoignagesTitre}
+          </h2>
+          <div class="grid-3">
+            {TEMOIGNAGES.map((temoignage) => (
+              <figure class="card blueprint testimonial">
+                <Corners />
+                <blockquote class="testimonial-quote">
+                  {tr.guillemets[0]}
+                  {temoignage.citation[lang]}
+                  {tr.guillemets[1]}
+                </blockquote>
+                <figcaption class="testimonial-author">
+                  <strong>{temoignage.prenom}</strong>
+                  {temoignage.fonction[lang]} · {temoignage.secteur[lang]}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <section class="section" aria-labelledby="pourquoi-title">
     <div class="container split">
@@ -337,6 +366,37 @@ const nbProjets = projets.length;
   .projects-all {
     font-size: 16px;
     white-space: nowrap;
+  }
+
+  /* Ils m'ont fait confiance */
+  .testimonials-title {
+    margin-bottom: 40px;
+  }
+
+  .testimonial {
+    margin: 0;
+    padding: 30px;
+    gap: 18px;
+  }
+
+  .testimonial-quote {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+    color: var(--color-neutral-600);
+  }
+
+  .testimonial-author strong {
+    font-size: 16px;
+    color: var(--color-text);
   }
 
   /* Indépendant ou agence, FAQ */
