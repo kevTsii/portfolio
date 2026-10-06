@@ -35,14 +35,15 @@ const nbProjets = projets.length;
           {tr.badge}
         </span>
         <h1 class="hero-title" id="hero-title">
-          {tr.heroTitre}
+          {tr.heroTitre}{' '}
           <span class="hero-word-line">
+            <span class="hero-phrase">{tr.motsLecteur}</span>
             <span
               class="hero-word"
               aria-hidden="true"
+              data-word={tr.mots[0]}
               data-words={JSON.stringify(tr.mots)}
-            >{tr.mots[0]}</span>
-            <span class="sr-only">{tr.motsLecteur}</span>
+            ></span>
           </span>
         </h1>
         <p class="hero-lead">{tr.heroLead}</p>
@@ -220,7 +221,7 @@ const nbProjets = projets.length;
     let index = 0;
     minuterie = window.setInterval(() => {
       index = (index + 1) % words.length;
-      word.textContent = words[index];
+      word.dataset.word = words[index];
       // Relance l'animation d'entrée à chaque changement de mot.
       word.style.animation = 'none';
       void word.offsetWidth;
@@ -282,9 +283,32 @@ const nbProjets = projets.length;
     color: var(--color-accent-700);
   }
 
+  /* Sans JavaScript ou avec mouvement réduit : la phrase complète. Sinon,
+     elle n'est plus lue que par les lecteurs d'écran et les mots défilent.
+     Le mot affiché vient de data-word (pseudo-élément), pour que le texte
+     de la page ne contienne la phrase qu'une fois. */
   .hero-word {
-    display: inline-block;
-    animation: wordin .45s ease-out;
+    display: none;
+  }
+
+  .hero-word::before {
+    content: attr(data-word);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .hero-word {
+      display: inline-block;
+      animation: wordin .45s ease-out;
+    }
+
+    :global(html.js) .hero-phrase {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
   }
 
   .hero-stats {

@@ -61,6 +61,8 @@ const canonique = absolue(chemin(lang, page));
             : 'light';
         }
         document.documentElement.dataset.theme = theme;
+        // Active les animations qui ont besoin de JavaScript (titre du hero).
+        document.documentElement.classList.add('js');
 
         // Navigation sans rechargement : la page entrante reçoit le thème
         // avant d'être affichée. Écouteur posé une seule fois.
@@ -71,6 +73,7 @@ const canonique = absolue(chemin(lang, page));
         document.addEventListener('astro:before-swap', (event) => {
           event.newDocument.documentElement.dataset.theme =
             document.documentElement.dataset.theme;
+          event.newDocument.documentElement.classList.add('js');
         });
       })();
     </script>
