@@ -116,9 +116,11 @@ export const fr = {
     projetsIntro: 'Des outils utilisés au quotidien par des entreprises et '
       + 'des services publics.',
     projetsTous: (n: number) => `Voir les ${n} projets →`,
-    pourquoiTitre: 'Pourquoi un indépendant plutôt qu\'une agence ?',
-    pourquoiTexte: 'Vous parlez directement à la personne qui fabrique votre '
-      + 'outil. Rien ne se perd en route.',
+    pourquoiTitre: 'Indépendant ou agence ?',
+    pourquoiTexte: 'Une agence a du sens pour un gros projet qui mobilise '
+      + 'plusieurs métiers. Pour un outil de gestion bien délimité, '
+      + 'travailler directement avec celui qui le construit va souvent plus '
+      + 'vite.',
     critere: 'Critère',
     avecMoi: 'Avec moi',
     avecAgence: 'Avec une agence',
@@ -126,17 +128,12 @@ export const fr = {
       {
         critere: 'Votre contact',
         moi: 'Celui qui construit l\'outil',
-        agence: 'Un commercial, puis un chef de projet',
+        agence: 'Une équipe, souvent via un chef de projet',
       },
       {
         critere: 'Le prix',
         moi: 'Sur devis, sans intermédiaire',
-        agence: 'Frais de structure inclus',
-      },
-      {
-        critere: 'Votre outil actuel',
-        moi: 'Je le reprends s\'il est récupérable',
-        agence: 'Souvent tout refaire',
+        agence: 'Inclut les coûts de l\'équipe et de la structure',
       },
       {
         critere: 'À la fin',

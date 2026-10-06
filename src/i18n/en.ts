@@ -108,9 +108,10 @@ export const en: Dictionnaire = {
     projetsTitre: 'Selected work',
     projetsIntro: 'Tools used every day by businesses and public services.',
     projetsTous: (n: number) => `See all ${n} projects →`,
-    pourquoiTitre: 'Why a freelancer rather than an agency?',
-    pourquoiTexte: 'You talk directly to the person building your tool. '
-      + 'Nothing gets lost along the way.',
+    pourquoiTitre: 'Freelancer or agency?',
+    pourquoiTexte: 'An agency makes sense for a large project that needs '
+      + 'several kinds of expertise. For a well-scoped business tool, working '
+      + 'directly with the person who builds it is often faster.',
     critere: 'Criterion',
     avecMoi: 'With me',
     avecAgence: 'With an agency',
@@ -118,17 +119,12 @@ export const en: Dictionnaire = {
       {
         critere: 'Your contact',
         moi: 'The person building the tool',
-        agence: 'A salesperson, then a project manager',
+        agence: 'A team, often through a project manager',
       },
       {
         critere: 'Pricing',
         moi: 'Quoted per project, no middleman',
-        agence: 'Overhead included',
-      },
-      {
-        critere: 'Your current tool',
-        moi: 'I take it over if it can be saved',
-        agence: 'Often a full rewrite',
+        agence: 'Includes the cost of the team and the company',
       },
       {
         critere: 'At the end',
