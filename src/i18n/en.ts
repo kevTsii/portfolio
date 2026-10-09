@@ -251,8 +251,8 @@ export const en: Dictionnaire = {
       },
       {
         titre: 'Upgrades and legacy code',
-        texte: 'Moving to recent versions of Symfony and PHP 8, with tests in '
-          + 'place before touching existing code.',
+        texte: 'Moving from Symfony 3.4 to recent versions and PHP 8, with '
+          + 'tests in place before touching existing code.',
       },
       {
         titre: 'Integrations',

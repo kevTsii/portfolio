@@ -265,8 +265,8 @@ export const fr = {
       },
       {
         titre: 'Montées de version et reprise de code',
-        texte: 'Passage vers des versions récentes de Symfony et PHP 8, avec '
-          + 'des tests posés avant de toucher au code existant.',
+        texte: 'Passage de Symfony 3.4 vers les versions récentes et PHP 8, '
+          + 'avec des tests posés avant de toucher au code existant.',
       },
       {
         titre: 'Intégrations',
