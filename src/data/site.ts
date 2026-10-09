@@ -1,8 +1,23 @@
 export const SITE = {
   nom: 'Kevin Tsiory Rakotosoa',
   nomComplet: 'Kevin Tsiory Rakotosoa',
-  email: 'tsioryrakotosoa@gmail.com',
-  // À remplacer par le lien Calendly ou Cal.com.
-  reservationUrl:
-    'mailto:tsioryrakotosoa@gmail.com?subject=Appel%20d%C3%A9couverte',
+  // Seule source de l'adresse affichée et des liens mailto.
+  email: 'me@kevin-tsiory-rakotosoa.com',
+  // Liens du footer, masqués tant que l'URL est vide.
+  // TODO : renseigner les URLs LinkedIn et GitHub.
+  reseaux: {
+    linkedin: '',
+    github: '',
+  },
 } as const;
+
+// Lien mailto vers SITE.email, avec un sujet et un corps pré-remplis.
+export function mailto(sujet = '', corps = ''): string {
+  const params = [
+    sujet && `subject=${encodeURIComponent(sujet)}`,
+    corps && `body=${encodeURIComponent(corps)}`,
+  ].filter(Boolean);
+
+  return `mailto:${SITE.email}`
+    + (params.length ? `?${params.join('&')}` : '');
+}

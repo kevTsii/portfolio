@@ -2,14 +2,18 @@ import { en } from './en';
 import { fr, type Dictionnaire } from './fr';
 
 export type Lang = 'fr' | 'en';
-export type Page = 'accueil' | 'realisations';
+export type Page = 'accueil' | 'realisations' | 'agences';
 
 const DICTIONNAIRES: Record<Lang, Dictionnaire> = { fr, en };
 
 // Le français est à la racine, l'anglais sous /en/ (voir astro.config.mjs).
-const CHEMINS: Record<Lang, Record<Page, string>> = {
-  fr: { accueil: '/', realisations: '/realisations' },
-  en: { accueil: '/en/', realisations: '/en/projects' },
+export const CHEMINS: Record<Lang, Record<Page, string>> = {
+  fr: { accueil: '/', realisations: '/realisations', agences: '/agences' },
+  en: {
+    accueil: '/en/',
+    realisations: '/en/projects',
+    agences: '/en/agencies',
+  },
 };
 
 export function t(lang: Lang): Dictionnaire {

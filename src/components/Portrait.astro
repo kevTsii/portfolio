@@ -1,0 +1,88 @@
+---
+// Photo du hero. Déposer src/assets/kevin.(jpg|jpeg|png|webp), carrée,
+// 800 × 800 px minimum ; à défaut, les initiales « KR » sont affichées.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/kevin.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+const photo = Object.values(photos)[0]?.default;
+---
+
+<div class="portrait">
+  <div class="portrait-ring" aria-hidden="true"></div>
+  <div class="portrait-img">
+    {
+      photo ? (
+        <Image
+          src={photo}
+          alt={t(lang).accueil.portraitAlt}
+          widths={[400, 660, 990]}
+          sizes="(max-width: 768px) 200px, 330px"
+          loading="eager"
+        />
+      ) : (
+        <span class="portrait-initials" aria-hidden="true">KR</span>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .portrait {
+    position: relative;
+    width: 330px;
+    height: 330px;
+  }
+
+  .portrait-ring {
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-300);
+  }
+
+  .portrait-img {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .portrait-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .portrait-initials {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 96px;
+    letter-spacing: .02em;
+    color: var(--color-accent-700);
+  }
+
+  @media (max-width: 768px) {
+    .portrait {
+      width: 200px;
+      height: 200px;
+    }
+
+    .portrait-initials {
+      font-size: 60px;
+    }
+  }
+</style>

@@ -12,7 +12,8 @@ export const fr = {
     methode: 'Comment ça marche',
     realisations: 'Réalisations',
     faq: 'Questions',
-    cta: 'Discutons de votre projet',
+    agences: 'Vous êtes une agence ?',
+    cta: 'Décrire mon projet par e-mail',
     themeClair: 'Passer en mode clair',
     themeSombre: 'Passer en mode sombre',
     theme: 'Changer de thème',
@@ -23,8 +24,20 @@ export const fr = {
   },
   footer: {
     role: 'Développeur indépendant',
+    agences: 'Agences et ESN',
+    linkedin: 'Mon profil LinkedIn',
+    github: 'Mon profil GitHub',
   },
-  reservation: 'Réserver mon appel gratuit',
+  contact: {
+    email: 'E-mail',
+    reponse: 'Réponse',
+    reponseDelai: 'Sous 48 heures',
+    lieu: 'Basé à',
+    lieuTexte: 'Antananarivo, je travaille à distance',
+    copier: 'Copier l\'adresse',
+    copie: 'Adresse copiée',
+    copieImpossible: 'Copie impossible',
+  },
   secteurs: {
     'Commerce': 'Commerce',
     'Formation': 'Formation',
@@ -46,16 +59,18 @@ export const fr = {
     title: 'Kevin Tsiory Rakotosoa · Développeur PHP indépendant',
     description: 'Des logiciels de gestion sur mesure, simples à utiliser et '
       + 'fiables. Devis, factures, stocks, espace client : un seul '
-      + 'interlocuteur, du premier appel à la mise en ligne.',
+      + 'interlocuteur, du premier échange à la mise en ligne.',
     badge: 'Disponible pour de nouveaux projets',
+    portraitAlt: 'Portrait de Kevin Tsiory Rakotosoa, développeur PHP '
+      + 'indépendant',
     heroTitre: 'Des logiciels de gestion sur mesure,',
     mots: ['simples à utiliser.', 'fiables.', 'faits pour votre métier.'],
     motsLecteur: 'simples à utiliser, fiables et faits pour votre métier.',
     heroLead: 'Devis, factures, stocks, espace client : je crée les outils web '
       + 'dont votre entreprise a besoin, ou je remets en forme ceux que vous '
-      + 'avez déjà. Un seul interlocuteur, du premier appel à la mise en '
+      + 'avez déjà. Un seul interlocuteur, du premier échange à la mise en '
       + 'ligne.',
-    ctaAppel: 'Réserver un appel gratuit de 30 min',
+    ctaEmail: 'Décrire mon projet par e-mail',
     ctaRealisations: 'Voir mes réalisations',
     statExperience: ['5 ans', 'd\'expérience'],
     statOutils: ['outils', 'en service chez des clients'],
@@ -93,8 +108,9 @@ export const fr = {
     etape: 'Étape {n} : ',
     etapes: [
       {
-        titre: 'On en parle',
-        texte: 'Un appel gratuit de 30 minutes pour comprendre votre besoin.',
+        titre: 'Vous m\'écrivez',
+        texte: 'Décrivez votre besoin en quelques lignes. Je vous réponds '
+          + 'sous 48 h avec mes questions.',
       },
       {
         titre: 'Je vous propose',
@@ -103,7 +119,8 @@ export const fr = {
       },
       {
         titre: 'Je construis',
-        texte: 'Un point chaque semaine. Vous testez au fur et à mesure.',
+        texte: 'Un point écrit chaque semaine. Vous testez au fur et à '
+          + 'mesure.',
       },
       {
         titre: 'On met en ligne',
@@ -115,9 +132,12 @@ export const fr = {
     projetsIntro: 'Des outils utilisés au quotidien par des entreprises et '
       + 'des services publics.',
     projetsTous: (n: number) => `Voir les ${n} projets →`,
-    pourquoiTitre: 'Pourquoi un indépendant plutôt qu\'une agence ?',
-    pourquoiTexte: 'Vous parlez directement à la personne qui fabrique votre '
-      + 'outil. Rien ne se perd en route.',
+    temoignagesTitre: 'Ils m\'ont fait confiance',
+    pourquoiTitre: 'Indépendant ou agence ?',
+    pourquoiTexte: 'Une agence a du sens pour un gros projet qui mobilise '
+      + 'plusieurs métiers. Pour un outil de gestion bien délimité, '
+      + 'travailler directement avec celui qui le construit va souvent plus '
+      + 'vite.',
     critere: 'Critère',
     avecMoi: 'Avec moi',
     avecAgence: 'Avec une agence',
@@ -125,17 +145,12 @@ export const fr = {
       {
         critere: 'Votre contact',
         moi: 'Celui qui construit l\'outil',
-        agence: 'Un commercial, puis un chef de projet',
+        agence: 'Une équipe, souvent via un chef de projet',
       },
       {
         critere: 'Le prix',
         moi: 'Sur devis, sans intermédiaire',
-        agence: 'Frais de structure inclus',
-      },
-      {
-        critere: 'Votre outil actuel',
-        moi: 'Je le reprends s\'il est récupérable',
-        agence: 'Souvent tout refaire',
+        agence: 'Inclut les coûts de l\'équipe et de la structure',
       },
       {
         critere: 'À la fin',
@@ -156,9 +171,9 @@ export const fr = {
       },
       {
         question: 'Combien ça coûte ?',
-        reponse: 'Ça dépend du projet. Après notre appel, je vous envoie un '
-          + 'devis écrit avec un prix et des délais. Vous décidez ensuite, '
-          + 'sans engagement.',
+        reponse: 'Ça dépend du projet. Après nos premiers échanges par '
+          + 'e-mail, je vous envoie un devis écrit avec un prix et des '
+          + 'délais. Vous décidez ensuite, sans engagement.',
       },
       {
         question: 'J\'ai déjà un logiciel, faut-il tout refaire ?',
@@ -168,9 +183,10 @@ export const fr = {
       },
       {
         question: 'Vous êtes à Madagascar : comment on travaille ?',
-        reponse: 'À distance, par visio et par écrit. Il n\'y a qu\'une à '
-          + 'deux heures de décalage avec la France : nos journées se '
-          + 'recouvrent presque entièrement.',
+        reponse: 'À distance, par e-mail. Tout est écrit, donc rien ne se '
+          + 'perd : votre besoin, les décisions prises, ce qui a été livré. '
+          + 'Il n\'y a qu\'une à deux heures de décalage avec la France, nos '
+          + 'journées se recouvrent presque entièrement.',
       },
       {
         question: 'Et après la mise en ligne ?',
@@ -179,14 +195,24 @@ export const fr = {
           + 'toute la documentation.',
       },
     ],
-    contactTitre: 'Parlons de votre projet',
-    contactTexte: '30 minutes, gratuitement, pour comprendre votre besoin. Je '
-      + 'vous dirai franchement si je peux vous aider.',
-    contactEmail: 'E-mail',
-    contactReponse: 'Réponse',
-    contactReponseDelai: 'Sous 48 heures',
-    contactLieu: 'Basé à',
-    contactLieuTexte: 'Antananarivo, je travaille à distance',
+    contactTitre: 'Écrivez-moi',
+    contactTexte: 'Décrivez votre besoin en quelques lignes : ce que fait '
+      + 'votre entreprise, ce qui vous fait perdre du temps, l\'outil que '
+      + 'vous utilisez aujourd\'hui. Je vous réponds sous 48 h et je vous '
+      + 'dis franchement si je peux vous aider.',
+    contactBouton: 'Décrire mon projet par e-mail',
+    // Sujet et corps pré-remplis du lien mailto.
+    contactSujet: 'Projet : [nom de votre entreprise]',
+    contactCorps: [
+      'Bonjour Kevin,',
+      '',
+      'Mon entreprise :',
+      'Ce que je voudrais améliorer :',
+      'L\'outil que j\'utilise aujourd\'hui :',
+      'Délai souhaité :',
+      '',
+      'Merci,',
+    ].join('\n'),
   },
   realisations: {
     title: 'Réalisations · Kevin Tsiory Rakotosoa',
@@ -205,7 +231,185 @@ export const fr = {
     affiche: '{n} projet affiché',
     affiches: '{n} projets affichés',
     ctaTitre: (n: number) => `Votre projet pourrait être le ${ordinalFr(n + 1)}`,
-    ctaTexte: 'Un appel gratuit de 30 minutes pour en parler.',
+    ctaTexte: 'Décrivez votre besoin par e-mail, je vous réponds sous 48 h.',
+  },
+  agences: {
+    title: 'Renfort Symfony pour agences et ESN · Kevin Tsiory Rakotosoa',
+    description: 'Développeur Symfony senior en sous-traitance, au forfait et '
+      + 'à distance. API, SSO, RabbitMQ, montées de version : je livre dans '
+      + 'votre dépôt, en marque blanche.',
+    surtitre: 'Pour les agences et les ESN',
+    titre: 'Un développeur Symfony senior quand votre équipe est pleine.',
+    lead: 'Je prends en charge un périmètre écrit, au forfait, à distance. '
+      + 'Vous gardez la relation avec votre client ; je livre dans votre '
+      + 'dépôt, en suivant vos conventions.',
+    ctaPerimetre: 'Envoyer un périmètre par e-mail',
+    ctaRealisations: 'Voir les réalisations',
+    servicesTitre: 'Ce que je peux prendre en charge',
+    services: [
+      {
+        titre: 'API et back-offices Symfony',
+        texte: 'API REST, back-offices, espaces client. Architecture '
+          + 'hexagonale si le projet s\'y prête, ou dans le style déjà en '
+          + 'place chez vous.',
+      },
+      {
+        titre: 'Authentification et SSO',
+        texte: 'OAuth2, OpenID Connect, connexion unique entre plusieurs '
+          + 'applications.',
+      },
+      {
+        titre: 'Traitements asynchrones',
+        texte: 'Files de messages avec RabbitMQ, imports, synchronisations et '
+          + 'tâches lourdes en arrière-plan.',
+      },
+      {
+        titre: 'Montées de version et reprise de code',
+        texte: 'Passage de Symfony 3.4 vers les versions récentes et PHP 8, '
+          + 'avec des tests posés avant de toucher au code existant.',
+      },
+      {
+        titre: 'Intégrations',
+        texte: 'Paiement en ligne (Stripe), connecteurs ERP, services tiers.',
+      },
+      {
+        titre: 'Laravel aussi',
+        texte: 'Back-offices Laravel avec un front Vue 3.',
+      },
+    ],
+    stackTitre: 'Stack',
+    // TODO : ajouter « API Platform » seulement après confirmation.
+    stack: [
+      'PHP 8',
+      'Symfony 3.4 à 7.4',
+      'Laravel',
+      'Doctrine',
+      'MySQL',
+      'PostgreSQL',
+      'Docker',
+      'RabbitMQ',
+      'OAuth2 / OpenID Connect',
+      'Stripe',
+      'Vue 3',
+      'Jenkins',
+      'GitHub Actions',
+      'Git',
+    ],
+    methodeTitre: 'Comment on travaille',
+    etapes: [
+      {
+        titre: 'Vous m\'envoyez le périmètre',
+        texte: 'Le besoin, un accès au dépôt ou un extrait de code, les '
+          + 'contraintes et la date de livraison.',
+      },
+      {
+        titre: 'Je réponds sous 48 h',
+        texte: 'Avec mes questions, puis un devis au forfait : livrables, '
+          + 'prix, délai.',
+      },
+      {
+        titre: 'Je développe dans votre dépôt',
+        texte: 'Sur une branche dédiée, avec vos conventions. Des merge '
+          + 'requests lisibles et des tests sur ce que je livre.',
+      },
+      {
+        titre: 'Un point écrit chaque semaine',
+        texte: 'Ce qui est fait, ce qui reste, ce qui bloque.',
+      },
+      {
+        titre: 'Livraison avec une note technique',
+        texte: 'Pour que votre équipe reprenne la main sans moi.',
+      },
+    ],
+    methodeEcrit: 'Tout se fait par écrit, par e-mail ou dans vos tickets. '
+      + 'Vous gardez une trace de chaque décision.',
+    attentesTitre: 'Ce que vous pouvez attendre',
+    attentes: [
+      // [À VALIDER]
+      {
+        titre: 'Marque blanche',
+        texte: 'Je ne contacte pas votre client, sauf si vous me le '
+          + 'demandez.',
+      },
+      // [À VALIDER]
+      {
+        titre: 'Confidentialité',
+        texte: 'Je signe votre accord de confidentialité si besoin.',
+      },
+      {
+        titre: 'Fuseau horaire',
+        texte: 'Antananarivo (UTC+3), une à deux heures d\'avance sur Paris.',
+      },
+      {
+        titre: 'Forfait uniquement',
+        texte: 'Je travaille sur des périmètres définis par écrit, pas en '
+          + 'régie à temps plein.',
+      },
+    ],
+    projetsTitre: 'Projets proches de ce que vous livrez',
+    // id : fiche de /realisations ; angle : présentation technique.
+    // TODO : e-Fokontany (RabbitMQ, ancre #e-fokontany) en quatrième carte ?
+    projets: [
+      {
+        id: 'api-devis',
+        titre: 'API B2B pour un réseau de magasins',
+        angle: 'Symfony 7.4, architecture hexagonale, connecteurs vers '
+          + 'l\'ERP de l\'enseigne.',
+      },
+      {
+        id: 'certicpf',
+        titre: 'Certi-CPF',
+        angle: 'Symfony 6.4, espaces multi-rôles, paiement Stripe par carte '
+          + 'et prélèvement.',
+      },
+      {
+        id: 'toemm',
+        titre: 'Back-office ToeMM',
+        angle: 'Laravel, Vue 3, Clean Architecture.',
+      },
+    ],
+    faqTitre: 'Questions des agences',
+    faqAutre: 'Une autre question ?',
+    faq: [
+      {
+        question: 'Vous pouvez venir dans nos locaux ?',
+        reponse: 'Non, je travaille à 100 % à distance, depuis Antananarivo.',
+      },
+      {
+        question: 'Vous utilisez nos outils ?',
+        reponse: 'Oui : votre dépôt Git, votre outil de tickets, votre CI. Je '
+          + 'm\'adapte à ce qui existe.',
+      },
+      {
+        question: 'Et si le périmètre change en cours de route ?',
+        reponse: 'Je chiffre le changement par écrit avant de le faire. Vous '
+          + 'validez, puis je l\'intègre.',
+      },
+      // [À VALIDER]
+      {
+        question: 'Quelle taille de mission ?',
+        reponse: 'Des forfaits bien délimités, de quelques jours à quelques '
+          + 'semaines de travail.',
+      },
+      // TODO : « Comment se passe la facturation ? » (structure, devise,
+      // modalités). Ne pas publier tant que le texte manque.
+    ],
+    contactTitre: 'Envoyez-moi votre périmètre',
+    contactTexte: 'Quelques lignes suffisent pour commencer : le projet, la '
+      + 'stack, ce que vous voulez me confier et pour quand. Je réponds sous '
+      + '48 h.',
+    contactBouton: 'Envoyer un périmètre par e-mail',
+    contactSujet: 'Renfort Symfony : [nom de l\'agence]',
+    contactCorps: [
+      'Bonjour Kevin,',
+      '',
+      'Agence :',
+      'Projet et stack :',
+      'Ce que je voudrais vous confier :',
+      'Date de livraison souhaitée :',
+      '',
+      'Merci,',
+    ].join('\n'),
   },
 };
 

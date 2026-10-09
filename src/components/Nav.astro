@@ -22,7 +22,12 @@ const liens = [
   },
   { href: chemin(lang, 'accueil', 'faq'), label: tr.faq },
 ];
-const contact = chemin(lang, 'accueil', 'contact');
+// La page agences a sa propre section de contact.
+const contact = chemin(
+  lang,
+  page === 'agences' ? 'agences' : 'accueil',
+  'contact',
+);
 ---
 
 <header
@@ -45,6 +50,13 @@ const contact = chemin(lang, 'accueil', 'contact');
         </a>
       ))
     }
+    <a
+      href={chemin(lang, 'agences')}
+      class="nav-agences"
+      aria-current={page === 'agences' ? 'page' : undefined}
+    >
+      {tr.agences}
+    </a>
     <a href={contact} class="btn btn-primary blueprint nav-menu-cta">
       <Corners />{tr.cta}
     </a>
@@ -221,6 +233,18 @@ const contact = chemin(lang, 'accueil', 'contact');
     border-bottom: 1px solid var(--color-accent);
   }
 
+  /* Lien discret vers la page agences, séparé des liens principaux. */
+  .nav-links > a.nav-agences {
+    margin-left: 8px;
+    padding-left: 14px;
+    border-left: 1px solid var(--color-divider);
+    color: var(--color-neutral-600);
+  }
+
+  .nav-links > a.nav-agences[aria-current='page'] {
+    border-bottom: 0;
+  }
+
   .nav-icon-btn {
     width: 40px;
     height: 40px;
@@ -282,7 +306,8 @@ const contact = chemin(lang, 'accueil', 'contact');
     display: block;
   }
 
-  @media (max-width: 900px) {
+  /* En dessous, les liens et le bouton ne tiennent plus sur une ligne. */
+  @media (max-width: 1240px) {
     .nav {
       gap: 12px;
       padding: 12px 16px;
@@ -323,6 +348,17 @@ const contact = chemin(lang, 'accueil', 'contact');
 
     .nav-links > a[aria-current='page'] {
       border-bottom-color: var(--color-accent);
+    }
+
+    .nav-links > a.nav-agences {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: 0;
+      font-size: 15px;
+    }
+
+    .nav-links > a.nav-agences[aria-current='page'] {
+      border-bottom: 1px solid var(--color-accent);
     }
   }
 

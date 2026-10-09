@@ -1,17 +1,38 @@
 ---
 import { SITE } from '../data/site';
-import { t, type Lang } from '../i18n';
+import { chemin, t, type Lang } from '../i18n';
+import IconeReseau from './IconeReseau.astro';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const tr = t(lang).footer;
+const reseaux = [
+  { name: 'linkedin', label: tr.linkedin, url: SITE.reseaux.linkedin },
+  { name: 'github', label: tr.github, url: SITE.reseaux.github },
+] as const;
+const reseauxActifs = reseaux.filter((r) => r.url);
 ---
 
 <footer class="footer">
   <span>© {new Date().getFullYear()} {SITE.nomComplet}</span>
-  <span class="footer-role">{t(lang).footer.role}</span>
+  <a href={chemin(lang, 'agences')}>{tr.agences}</a>
+  <span class="footer-role">{tr.role}</span>
+  {
+    reseauxActifs.length > 0 && (
+      <ul class="footer-social">
+        {reseauxActifs.map((r) => (
+          <li>
+            <a href={r.url} aria-label={r.label} rel="me noopener">
+              <IconeReseau name={r.name} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </footer>
 
 <style>
@@ -26,6 +47,26 @@ const { lang } = Astro.props;
 
   .footer-role {
     margin-left: auto;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 4px;
+    margin: -8px -8px -8px 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-social a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-neutral-600);
+  }
+
+  .footer-social a:hover {
+    color: var(--color-accent-700);
   }
 
   @media (max-width: 768px) {

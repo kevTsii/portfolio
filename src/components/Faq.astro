@@ -1,0 +1,65 @@
+---
+// Questions-réponses en accordéon (<details>).
+
+interface Props {
+  items: readonly { question: string; reponse: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item) => (
+      <details class="faq-item">
+        <summary>
+          <span>{item.question}</span>
+          <span class="faq-plus" aria-hidden="true">+</span>
+        </summary>
+        <p>{item.reponse}</p>
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .faq-item {
+    border-top: 1px solid var(--color-divider);
+    padding: 20px 0;
+  }
+
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-plus {
+    color: var(--color-accent-700);
+    transition: transform .2s;
+  }
+
+  .faq-item[open] .faq-plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-neutral-700);
+    margin: 12px 0 0;
+  }
+</style>

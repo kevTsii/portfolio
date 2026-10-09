@@ -9,18 +9,21 @@ interface Props {
   projet: Projet;
   variante: 'accueil' | 'realisations';
   lang: Lang;
+  // Titre et texte propres à la page qui affiche la carte (page agences).
+  titre?: string;
+  texte?: string;
 }
 
-const { projet, variante, lang } = Astro.props;
+const { projet, variante, lang, titre, texte: texteImpose } = Astro.props;
 const { data } = projet;
 const tr = t(lang);
 const corps = projet.entry.body?.trim();
 const accueil = variante === 'accueil';
 const secteur = tr.secteurs[data.secteur];
 const etiquette = accueil ? (data.etiquetteAccueil ?? secteur) : secteur;
-const texte = accueil
+const texte = texteImpose ?? (accueil
   ? (data.resumeAccueil ?? data.resume ?? corps)
-  : (data.resume ?? corps);
+  : (data.resume ?? corps));
 const Tag = accueil ? 'a' : 'article';
 ---
 
@@ -31,7 +34,8 @@ const Tag = accueil ? 'a' : 'article';
   data-secteur={accueil ? undefined : data.secteur}
 >
   <Corners />
-  <div class="duotone project-media">
+  <!-- Couleurs d'origine sur l'accueil, teinte duotone ailleurs. -->
+  <div class:list={['project-media', { duotone: !accueil }]}>
     {
       data.image ? (
         <Image
@@ -59,7 +63,7 @@ const Tag = accueil ? 'a' : 'article';
         </div>
       )
     }
-    <h3 class="project-title">{data.titre}</h3>
+    <h3 class="project-title">{titre ?? data.titre}</h3>
     <p class="project-text">{texte}</p>
     {
       !accueil && (
@@ -106,6 +110,7 @@ const Tag = accueil ? 'a' : 'article';
 
   .project-media {
     height: 190px;
+    overflow: hidden;
   }
 
   .project-img {
