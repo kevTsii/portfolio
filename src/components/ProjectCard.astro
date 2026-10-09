@@ -34,7 +34,8 @@ const Tag = accueil ? 'a' : 'article';
   data-secteur={accueil ? undefined : data.secteur}
 >
   <Corners />
-  <div class="duotone project-media">
+  <!-- Couleurs d'origine sur l'accueil, teinte duotone ailleurs. -->
+  <div class:list={['project-media', { duotone: !accueil }]}>
     {
       data.image ? (
         <Image
@@ -109,6 +110,7 @@ const Tag = accueil ? 'a' : 'article';
 
   .project-media {
     height: 190px;
+    overflow: hidden;
   }
 
   .project-img {
