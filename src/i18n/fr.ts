@@ -31,7 +31,7 @@ export const fr = {
   contact: {
     email: 'E-mail',
     reponse: 'Réponse',
-    reponseDelai: 'Sous 48 heures',
+    reponseDelai: 'Sous 24 heures',
     lieu: 'Basé à',
     lieuTexte: 'Antananarivo, je travaille à distance',
     copier: 'Copier l\'adresse',
@@ -110,7 +110,7 @@ export const fr = {
       {
         titre: 'Vous m\'écrivez',
         texte: 'Décrivez votre besoin en quelques lignes. Je vous réponds '
-          + 'sous 48 h avec mes questions.',
+          + 'sous 24 h avec mes questions.',
       },
       {
         titre: 'Je vous propose',
@@ -161,7 +161,7 @@ export const fr = {
     faqTitre: 'Vos questions',
     faqAutre: 'Une autre question ?',
     faqEcrire: 'Écrivez-moi',
-    faqDelai: ', je réponds sous 48 h.',
+    faqDelai: ', je réponds sous 24 h.',
     faq: [
       {
         question: 'Je ne suis pas du tout technique, est-ce un problème ?',
@@ -198,7 +198,7 @@ export const fr = {
     contactTitre: 'Écrivez-moi',
     contactTexte: 'Décrivez votre besoin en quelques lignes : ce que fait '
       + 'votre entreprise, ce qui vous fait perdre du temps, l\'outil que '
-      + 'vous utilisez aujourd\'hui. Je vous réponds sous 48 h et je vous '
+      + 'vous utilisez aujourd\'hui. Je vous réponds sous 24 h et je vous '
       + 'dis franchement si je peux vous aider.',
     contactBouton: 'Décrire mon projet par e-mail',
     // Sujet et corps pré-remplis du lien mailto.
@@ -231,7 +231,7 @@ export const fr = {
     affiche: '{n} projet affiché',
     affiches: '{n} projets affichés',
     ctaTitre: (n: number) => `Votre projet pourrait être le ${ordinalFr(n + 1)}`,
-    ctaTexte: 'Décrivez votre besoin par e-mail, je vous réponds sous 48 h.',
+    ctaTexte: 'Décrivez votre besoin par e-mail, je vous réponds sous 24 h.',
   },
   agences: {
     title: 'Renfort Symfony pour agences et ESN · Kevin Tsiory Rakotosoa',
@@ -303,7 +303,7 @@ export const fr = {
           + 'contraintes et la date de livraison.',
       },
       {
-        titre: 'Je réponds sous 48 h',
+        titre: 'Je réponds sous 24 h',
         texte: 'Avec mes questions, puis un devis au forfait : livrables, '
           + 'prix, délai.',
       },
@@ -397,7 +397,7 @@ export const fr = {
     contactTitre: 'Envoyez-moi votre périmètre',
     contactTexte: 'Quelques lignes suffisent pour commencer : le projet, la '
       + 'stack, ce que vous voulez me confier et pour quand. Je réponds sous '
-      + '48 h.',
+      + '24 h.',
     contactBouton: 'Envoyer un périmètre par e-mail',
     contactSujet: 'Renfort Symfony : [nom de l\'agence]',
     contactCorps: [

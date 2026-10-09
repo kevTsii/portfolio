@@ -41,11 +41,12 @@ const tr = t(lang).contact;
             data-copy-email={SITE.email}
             data-copie={tr.copie}
             data-copie-impossible={tr.copieImpossible}
+            aria-label={tr.copier}
+            title={tr.copier}
             hidden
           >
             <Icon name="copy" size={16} class="icon-copy" />
             <Icon name="check" size={16} class="icon-check" />
-            <span data-copy-label>{tr.copier}</span>
           </button>
           <span class="sr-only" aria-live="polite" data-copy-status></span>
         </dd>
@@ -63,18 +64,22 @@ const tr = t(lang).contact;
 </section>
 
 <script>
-  // Bouton « Copier l'adresse », affiché seulement si le presse-papiers
-  // est disponible (le lien mailto reste le repli).
+  // Bouton icône « Copier l'adresse », affiché seulement si le
+  // presse-papiers est disponible (le lien mailto reste le repli). Son
+  // libellé, porté par aria-label et title, annonce le résultat.
   function initCopie(): void {
     const bouton = document.querySelector<HTMLButtonElement>(
       '[data-copy-email]',
     );
-    const label = bouton?.querySelector<HTMLElement>('[data-copy-label]');
     const statut = document.querySelector<HTMLElement>('[data-copy-status]');
-    if (!bouton || !label || !navigator.clipboard) {
+    if (!bouton || !navigator.clipboard) {
       return;
     }
-    const libelle = label.textContent ?? '';
+    const libelle = bouton.getAttribute('aria-label') ?? '';
+    const afficher = (texte: string): void => {
+      bouton.setAttribute('aria-label', texte);
+      bouton.title = texte;
+    };
     let minuterie: number | undefined;
     bouton.hidden = false;
     bouton.addEventListener('click', async () => {
@@ -87,14 +92,14 @@ const tr = t(lang).contact;
       } catch {
         // Le message d'échec reste affiché.
       }
-      label.textContent = message;
+      afficher(message);
       if (statut) {
         statut.textContent = message;
       }
       window.clearTimeout(minuterie);
       minuterie = window.setTimeout(() => {
         bouton.classList.remove('is-copied');
-        label.textContent = libelle;
+        afficher(libelle);
         if (statut) {
           statut.textContent = '';
         }
@@ -177,10 +182,10 @@ const tr = t(lang).contact;
   }
 
   .contact-copy {
-    gap: 6px;
-    padding: 4px 8px;
-    margin-left: -8px;
-    font-size: 14px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin-left: -6px;
     color: inherit;
     opacity: .85;
   }

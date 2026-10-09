@@ -29,7 +29,7 @@ export const en: Dictionnaire = {
   contact: {
     email: 'Email',
     reponse: 'Reply',
-    reponseDelai: 'Within 48 hours',
+    reponseDelai: 'Within 24 hours',
     lieu: 'Based in',
     lieuTexte: 'Antananarivo, working remotely',
     copier: 'Copy address',
@@ -103,7 +103,7 @@ export const en: Dictionnaire = {
     etapes: [
       {
         titre: 'You write to me',
-        texte: 'Describe what you need in a few lines. I reply within 48 '
+        texte: 'Describe what you need in a few lines. I reply within 24 '
           + 'hours with my questions.',
       },
       {
@@ -152,7 +152,7 @@ export const en: Dictionnaire = {
     faqTitre: 'Your questions',
     faqAutre: 'Another question?',
     faqEcrire: 'Write to me',
-    faqDelai: ', I reply within 48 hours.',
+    faqDelai: ', I reply within 24 hours.',
     faq: [
       {
         question: 'I\'m not technical at all. Is that a problem?',
@@ -187,7 +187,7 @@ export const en: Dictionnaire = {
     contactTitre: 'Write to me',
     contactTexte: 'Describe what you need in a few lines: what your business '
       + 'does, what is wasting your time, the tool you use today. I reply '
-      + 'within 48 hours and tell you honestly whether I can help.',
+      + 'within 24 hours and tell you honestly whether I can help.',
     contactBouton: 'Describe my project by email',
     contactSujet: 'Project: [your company name]',
     contactCorps: [
@@ -216,7 +216,7 @@ export const en: Dictionnaire = {
     affiche: '{n} project shown',
     affiches: '{n} projects shown',
     ctaTitre: (n: number) => `Your project could be the ${ordinalEn(n + 1)}`,
-    ctaTexte: 'Describe what you need by email, I reply within 48 hours.',
+    ctaTexte: 'Describe what you need by email, I reply within 24 hours.',
   },
   agences: {
     title: 'Symfony support for agencies and IT consultancies · Kevin Tsiory '
@@ -289,7 +289,7 @@ export const en: Dictionnaire = {
           + 'the constraints and the delivery date.',
       },
       {
-        titre: 'I reply within 48 hours',
+        titre: 'I reply within 24 hours',
         texte: 'With my questions, then a fixed-price quote: deliverables, '
           + 'price, timeline.',
       },
@@ -374,7 +374,7 @@ export const en: Dictionnaire = {
     ],
     contactTitre: 'Send me your scope',
     contactTexte: 'A few lines are enough to get started: the project, the '
-      + 'stack, what you want to hand over and by when. I reply within 48 '
+      + 'stack, what you want to hand over and by when. I reply within 24 '
       + 'hours.',
     contactBouton: 'Send a scope by email',
     contactSujet: 'Symfony support: [agency name]',
