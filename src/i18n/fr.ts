@@ -281,7 +281,7 @@ export const fr = {
     // TODO : ajouter « API Platform » seulement après confirmation.
     stack: [
       'PHP 8',
-      'Symfony 6 et 7',
+      'Symfony 3.4 à 7.4',
       'Laravel',
       'Doctrine',
       'MySQL',

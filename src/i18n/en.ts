@@ -267,7 +267,7 @@ export const en: Dictionnaire = {
     stackTitre: 'Stack',
     stack: [
       'PHP 8',
-      'Symfony 6 and 7',
+      'Symfony 3.4 to 7.4',
       'Laravel',
       'Doctrine',
       'MySQL',
